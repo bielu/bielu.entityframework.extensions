@@ -38,7 +38,9 @@ public sealed class VersioningSaveChangesInterceptor(
 
         if (eventData.Context is { } context)
         {
+#pragma warning disable VSTHRD002 // EF's SavingChanges interceptor signature is synchronous; we must run the same logic here.
             ProcessChangesAsync(context, async: false, CancellationToken.None).GetAwaiter().GetResult();
+#pragma warning restore VSTHRD002
         }
 
         return base.SavingChanges(eventData, result);
@@ -283,7 +285,7 @@ public sealed class VersioningSaveChangesInterceptor(
         var existsInChangeTracker = context.ChangeTracker
             .Entries()
             .Any(e => e.State == EntityState.Added
-                      && !ReferenceEquals(e, entry)
+                      && !ReferenceEquals(e.Entity, entry.Entity)
                       && entityType.IsInstanceOfType(e.Entity)
                       && e.Entity is IVersionedEntity other
                       && other.EffectiveAt == effectiveAt

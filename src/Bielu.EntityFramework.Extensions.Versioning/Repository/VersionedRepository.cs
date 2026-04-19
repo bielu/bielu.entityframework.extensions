@@ -46,8 +46,10 @@ public class VersionedRepository<TContext, TEntity, TEntityId, TVersionId>(
 
     /// <inheritdoc />
     public VersionSaveResult<TEntity> Save(TEntityId entityId, DateTimeOffset effectiveAt, TEntity payload)
+#pragma warning disable VSTHRD002 // Synchronous wrapper for the documented sync API.
         => SaveCoreAsync(entityId, effectiveAt, payload, requireExisting: false, CancellationToken.None)
             .GetAwaiter().GetResult();
+#pragma warning restore VSTHRD002
 
     /// <inheritdoc />
     public Task<VersionSaveResult<TEntity>> UpdateAsync(
@@ -59,8 +61,10 @@ public class VersionedRepository<TContext, TEntity, TEntityId, TVersionId>(
 
     /// <inheritdoc />
     public VersionSaveResult<TEntity> Update(TEntityId entityId, DateTimeOffset effectiveAt, TEntity payload)
+#pragma warning disable VSTHRD002 // Synchronous wrapper for the documented sync API.
         => SaveCoreAsync(entityId, effectiveAt, payload, requireExisting: true, CancellationToken.None)
             .GetAwaiter().GetResult();
+#pragma warning restore VSTHRD002
 
     private async Task<VersionSaveResult<TEntity>> SaveCoreAsync(
         TEntityId entityId,
@@ -116,15 +120,19 @@ public class VersionedRepository<TContext, TEntity, TEntityId, TVersionId>(
         CancellationToken cancellationToken = default)
     {
         var asOfValue = asOf ?? Clock.UtcNow;
-        return await Set
+        // Pick the most recent version <= asOf regardless of IsDeleted, then
+        // honour tombstones by returning null if the latest version is a soft
+        // delete. This is the correct "current view" semantics: a tombstone
+        // does mark the aggregate as not-currently-present.
+        var latest = await Set
             .IgnoreQueryFilters()
-            .Where(e => e.EntityId.Equals(entityId)
-                        && e.EffectiveAt <= asOfValue
-                        && !e.IsDeleted)
+            .Where(e => e.EntityId.Equals(entityId) && e.EffectiveAt <= asOfValue)
             .OrderByDescending(e => e.EffectiveAt)
             .ThenByDescending(e => e.VersionNumber)
             .FirstOrDefaultAsync(cancellationToken)
             .ConfigureAwait(false);
+
+        return latest is null || latest.IsDeleted ? null : latest;
     }
 
     /// <inheritdoc />

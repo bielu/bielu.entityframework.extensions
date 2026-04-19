@@ -2,6 +2,7 @@ using System.Linq.Expressions;
 using Bielu.EntityFramework.Extensions.Versioning.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bielu.EntityFramework.Extensions.Versioning.Configuration;
 
@@ -30,10 +31,18 @@ public sealed class VersionedEntityConfiguration<TEntity, TEntityId, TVersionId>
         // Required properties.
         builder.Property(e => e.EntityId).IsRequired();
         builder.Property(e => e.VersionId).IsRequired();
-        builder.Property(e => e.EffectiveAt).IsRequired();
         builder.Property(e => e.RecordedAt).IsRequired();
         builder.Property(e => e.IsDeleted).IsRequired();
         builder.Property(e => e.VersionNumber).IsRequired();
+
+        // EffectiveAt is stored as a long (binary encoding of DateTimeOffset)
+        // for portable aggregation: SQLite (and some other providers) cannot
+        // apply MAX/MIN to native DateTimeOffset values, so we round-trip
+        // through DateTimeOffsetToBinaryConverter — which is part of the core
+        // EF Core package and works on every provider.
+        builder.Property(e => e.EffectiveAt)
+               .IsRequired()
+               .HasConversion(new DateTimeOffsetToBinaryConverter());
 
         // Composite unique index on (EntityId, EffectiveAt, VersionId): the
         // VersionId tiebreaker means two writes that legitimately share the
@@ -44,21 +53,18 @@ public sealed class VersionedEntityConfiguration<TEntity, TEntityId, TVersionId>
         builder.HasIndex(nameof(IVersionedEntity<TEntityId, TVersionId>.EntityId),
                          nameof(IVersionedEntity.EffectiveAt),
                          nameof(IVersionedEntity<TEntityId, TVersionId>.VersionId))
-               .IsUnique()
-               .HasDatabaseName($"IX_{typeof(TEntity).Name}_EntityId_EffectiveAt_VersionId");
+               .IsUnique();
 
         // Helper index for "current version" lookups: (EntityId, EffectiveAt).
         builder.HasIndex(nameof(IVersionedEntity<TEntityId, TVersionId>.EntityId),
-                         nameof(IVersionedEntity.EffectiveAt))
-               .HasDatabaseName($"IX_{typeof(TEntity).Name}_EntityId_EffectiveAt");
+                         nameof(IVersionedEntity.EffectiveAt));
 
         // Insertion-order index: makes MAX(VersionNumber) per EntityId an
         // index seek. The highest VersionNumber for an EntityId equals the
         // total number of versions for that aggregate, so callers get the
         // count for free.
         builder.HasIndex(nameof(IVersionedEntity<TEntityId, TVersionId>.EntityId),
-                         nameof(IVersionedEntity.VersionNumber))
-               .HasDatabaseName($"IX_{typeof(TEntity).Name}_EntityId_VersionNumber");
+                         nameof(IVersionedEntity.VersionNumber));
 
         // Concurrency token (when present on the runtime type). We only opt
         // it in when the property is actually defined on the CLR type so that
