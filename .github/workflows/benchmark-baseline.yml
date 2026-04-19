@@ -1,0 +1,83 @@
+name: Update Performance Baseline
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'src/Bielu.EntityFramework.Extensions.Versioning/**'
+      - 'src/Bielu.EntityFramework.Extensions.Versioning.Abstractions/**'
+      - 'src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/**'
+      - 'Directory.Packages.props'
+  workflow_dispatch:  # Allow manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: '10.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/Bielu.EntityFramework.Extensions.Versioning.Benchmarks.csproj
+
+    - name: Build benchmarks
+      run: dotnet build src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/Bielu.EntityFramework.Extensions.Versioning.Benchmarks.csproj -c Release --no-restore
+
+    - name: Run regression benchmarks
+      run: |
+        dotnet run --project src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/Bielu.EntityFramework.Extensions.Versioning.Benchmarks.csproj \
+          -c Release --no-build -- \
+          --filter "*RegressionBenchmark*" \
+          --exporters json \
+          --artifacts ./BenchmarkDotNet.Artifacts
+
+    - name: Store results to GitHub Pages
+      uses: benchmark-action/github-action-benchmark@v1
+      with:
+        name: Regression Benchmarks
+        tool: 'benchmarkdotnet'
+        output-file-path: ./BenchmarkDotNet.Artifacts/results/Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark-report-full-compressed.json
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        auto-push: true
+        gh-pages-branch: gh-pages
+        benchmark-data-dir-path: benchmarks
+        comment-on-alert: false
+        alert-threshold: '150%'
+
+    - name: Store baseline artifact
+      uses: actions/upload-artifact@v7
+      with:
+        name: benchmark-baseline
+        path: ./BenchmarkDotNet.Artifacts/results/
+        retention-days: 365
+
+    - name: Generate summary report
+      run: |
+        echo "# Performance Baseline Updated" > $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Commit:** \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+        echo "**Date:** $(date -u)" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "Baseline results have been stored to GitHub Pages for historical tracking." >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "📈 View performance trends: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/dev/bench/" >> $GITHUB_STEP_SUMMARY
+
+    - name: Commit baseline to repository
+      continue-on-error: true
+      run: |
+        mkdir -p .benchmarks
+        cp -r ./BenchmarkDotNet.Artifacts/results/* .benchmarks/
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add .benchmarks/
+        git commit -m "chore: update performance baseline [skip ci]" || echo "No changes to commit"
+        git pull --rebase origin main && git push
