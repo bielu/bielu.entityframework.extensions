@@ -152,9 +152,9 @@ when the tombstone is the latest version.
 | Option | Default | Behaviour |
 | --- | --- | --- |
 | `VersionIdStrategy` | `NewGuid` | How `VersionId`s are auto-assigned by the interceptor when not pre-populated. `CallerProvided` disables auto-assignment. |
-| `QueryFilterBehavior` | `AsOfNow` | Whether to install a soft-delete query filter on versioned entities. The repository methods always call `IgnoreQueryFilters()` themselves, so this only affects ad-hoc LINQ. |
-| `InPlaceUpdateBehavior` | `Throw` | What to do when an EF-tracked versioned entity becomes `Modified`. `Throw` enforces immutability; `ConvertToNewVersion` automatically promotes the change to a new version row. |
-| `EffectiveAtPrecision` | `null` (no rounding) | Round all `EffectiveAt` values to this precision before persisting (e.g. `TimeSpan.FromSeconds(1)`). |
+| `QueryFilterBehavior` | `AllVersions` | Whether to install a soft-delete query filter on versioned entities. The repository methods always call `IgnoreQueryFilters()` themselves, so this only affects ad-hoc LINQ. Set to `AsOfNow` to hide non-current and tombstoned rows by default. |
+| `InPlaceUpdateBehavior` | `Throw` | What to do when an EF-tracked versioned entity becomes `Modified`. `Throw` enforces immutability; `ConvertToNewVersion` automatically promotes the change to a new version row; `Allow` bypasses the guard for administrative scenarios. |
+| `EffectiveAtPrecision` | `Tick` (verbatim) | Granularity to which incoming `EffectiveAt` timestamps are rounded before persisting (`Tick`, `Microsecond`, `Millisecond`, `Second`). |
 | `DetectCollisionsExplicitly` | `true` | When `true`, the interceptor surfaces `EffectiveAtCollisionException` with a clear message before the provider raises an opaque unique-constraint error. |
 
 ### Observability
