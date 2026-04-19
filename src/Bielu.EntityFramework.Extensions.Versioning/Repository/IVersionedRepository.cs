@@ -62,6 +62,22 @@ public sealed record VersionNeighbors<TEntity>
 }
 
 /// <summary>
+/// A request to persist a single version, used by the bulk
+/// <c>SaveMany</c> / <c>UpdateMany</c> / <c>UpsertMany</c> entry points.
+/// </summary>
+/// <typeparam name="TEntity">The versioned entity type.</typeparam>
+/// <typeparam name="TEntityId">Aggregate identifier type.</typeparam>
+/// <param name="EntityId">The aggregate identifier.</param>
+/// <param name="EffectiveAt">The business-time at which the version becomes effective.</param>
+/// <param name="Payload">The payload to persist as the new version.</param>
+public sealed record VersionWriteRequest<TEntity, TEntityId>(
+    TEntityId EntityId,
+    DateTimeOffset EffectiveAt,
+    TEntity Payload)
+    where TEntity : class
+    where TEntityId : notnull;
+
+/// <summary>
 /// Provider-agnostic repository abstraction for content-versioned entities.
 /// </summary>
 /// <typeparam name="TEntity">The versioned entity type.</typeparam>
@@ -103,39 +119,83 @@ public interface IVersionedRepository<TEntity, TEntityId, TVersionId>
         TEntity payload,
         CancellationToken cancellationToken = default);
 
-    /// <summary>
-    /// Synchronous counterpart to <see cref="SaveAsync"/>.
-    /// </summary>
+    /// <summary>Synchronous counterpart to <see cref="SaveAsync"/>.</summary>
     VersionSaveResult<TEntity> Save(
         TEntityId entityId,
         DateTimeOffset effectiveAt,
         TEntity payload);
 
     /// <summary>
+    /// Bulk variant of <see cref="SaveAsync"/>. All requests are persisted in
+    /// a single underlying <c>SaveChangesAsync</c> call so they share one
+    /// transaction on relational providers.
+    /// </summary>
+    Task<IReadOnlyList<VersionSaveResult<TEntity>>> SaveManyAsync(
+        IEnumerable<VersionWriteRequest<TEntity, TEntityId>> requests,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>Synchronous counterpart to <see cref="SaveManyAsync"/>.</summary>
+    IReadOnlyList<VersionSaveResult<TEntity>> SaveMany(
+        IEnumerable<VersionWriteRequest<TEntity, TEntityId>> requests);
+
+    /// <summary>
     /// Persists <paramref name="payload"/> as a new version of an
     /// <i>existing</i> aggregate (one that already has at least one version
     /// recorded for <paramref name="entityId"/>). Throws
     /// <see cref="InvalidOperationException"/> when the aggregate does not
-    /// yet exist; use <see cref="SaveAsync"/> for upsert semantics.
+    /// yet exist; use <see cref="SaveAsync"/> or <see cref="UpsertAsync"/>
+    /// for create-or-update semantics.
     /// </summary>
-    /// <remarks>
-    /// Like <see cref="SaveAsync"/>, the returned
-    /// <see cref="VersionSaveResult{TEntity}"/> reports whether the new row is
-    /// the new current version or an archived (back-dated) one.
-    /// </remarks>
     Task<VersionSaveResult<TEntity>> UpdateAsync(
         TEntityId entityId,
         DateTimeOffset effectiveAt,
         TEntity payload,
         CancellationToken cancellationToken = default);
 
-    /// <summary>
-    /// Synchronous counterpart to <see cref="UpdateAsync"/>.
-    /// </summary>
+    /// <summary>Synchronous counterpart to <see cref="UpdateAsync"/>.</summary>
     VersionSaveResult<TEntity> Update(
         TEntityId entityId,
         DateTimeOffset effectiveAt,
         TEntity payload);
+
+    /// <summary>Bulk variant of <see cref="UpdateAsync"/>.</summary>
+    Task<IReadOnlyList<VersionSaveResult<TEntity>>> UpdateManyAsync(
+        IEnumerable<VersionWriteRequest<TEntity, TEntityId>> requests,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>Synchronous counterpart to <see cref="UpdateManyAsync"/>.</summary>
+    IReadOnlyList<VersionSaveResult<TEntity>> UpdateMany(
+        IEnumerable<VersionWriteRequest<TEntity, TEntityId>> requests);
+
+    /// <summary>
+    /// Create-or-update entry point. Equivalent to <see cref="SaveAsync"/>,
+    /// but provided as a separate method so that domain code can read at the
+    /// call-site exactly what was intended. The returned
+    /// <see cref="VersionSaveResult{TEntity}"/> reports whether the operation
+    /// effectively created the aggregate (<see cref="VersionKind.Initial"/>)
+    /// or appended to an existing one (<see cref="VersionKind.Current"/> /
+    /// <see cref="VersionKind.Archive"/>).
+    /// </summary>
+    Task<VersionSaveResult<TEntity>> UpsertAsync(
+        TEntityId entityId,
+        DateTimeOffset effectiveAt,
+        TEntity payload,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>Synchronous counterpart to <see cref="UpsertAsync"/>.</summary>
+    VersionSaveResult<TEntity> Upsert(
+        TEntityId entityId,
+        DateTimeOffset effectiveAt,
+        TEntity payload);
+
+    /// <summary>Bulk variant of <see cref="UpsertAsync"/>.</summary>
+    Task<IReadOnlyList<VersionSaveResult<TEntity>>> UpsertManyAsync(
+        IEnumerable<VersionWriteRequest<TEntity, TEntityId>> requests,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>Synchronous counterpart to <see cref="UpsertManyAsync"/>.</summary>
+    IReadOnlyList<VersionSaveResult<TEntity>> UpsertMany(
+        IEnumerable<VersionWriteRequest<TEntity, TEntityId>> requests);
 
     /// <summary>
     /// Returns the version that is current as of <paramref name="asOf"/>

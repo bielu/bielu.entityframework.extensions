@@ -221,11 +221,11 @@ public static class VersioningDbContextExtensions
     }
 
     // -----------------------------------------------------------------------
-    // Internal plumbing
+    // Internal plumbing (also used by the bulk + base-context companions)
     // -----------------------------------------------------------------------
 
-    private static IVersionedRepository<TEntity, TEntityId, TVersionId> RepositoryFor<TEntity, TEntityId, TVersionId>(
-        DbContext context)
+    internal static IVersionedRepository<TEntity, TEntityId, TVersionId> RepositoryForVersioning<TEntity, TEntityId, TVersionId>(
+        this DbContext context)
         where TEntity : class, IVersionedEntity<TEntityId, TVersionId>
         where TEntityId : notnull
         where TVersionId : notnull
@@ -240,6 +240,13 @@ public static class VersioningDbContextExtensions
         // TContext type through every extension method.
         return new VersionedRepository<DbContext, TEntity, TEntityId, TVersionId>(context, clock, optionsMonitor);
     }
+
+    private static IVersionedRepository<TEntity, TEntityId, TVersionId> RepositoryFor<TEntity, TEntityId, TVersionId>(
+        DbContext context)
+        where TEntity : class, IVersionedEntity<TEntityId, TVersionId>
+        where TEntityId : notnull
+        where TVersionId : notnull
+        => context.RepositoryForVersioning<TEntity, TEntityId, TVersionId>();
 
     private static T ResolveOrDefault<T>(DbContext context, Func<T> fallback) where T : class
     {
@@ -259,11 +266,14 @@ public static class VersioningDbContextExtensions
         return appServices?.GetService(typeof(T)) as T ?? fallback();
     }
 
-    private static DbContext GetContext<TEntity>(DbSet<TEntity> set) where TEntity : class
+    internal static DbContext GetVersioningContext<TEntity>(this DbSet<TEntity> set) where TEntity : class
     {
         ArgumentNullException.ThrowIfNull(set);
         return set.GetService<ICurrentDbContext>().Context;
     }
+
+    private static DbContext GetContext<TEntity>(DbSet<TEntity> set) where TEntity : class
+        => set.GetVersioningContext();
 }
 
 /// <summary>

@@ -42,12 +42,26 @@ public class VersionedRepository<TContext, TEntity, TEntityId, TVersionId>(
         DateTimeOffset effectiveAt,
         TEntity payload,
         CancellationToken cancellationToken = default)
-        => SaveCoreAsync(entityId, effectiveAt, payload, requireExisting: false, cancellationToken);
+        => SaveSingleAsync(entityId, effectiveAt, payload, requireExisting: false, cancellationToken);
 
     /// <inheritdoc />
     public VersionSaveResult<TEntity> Save(TEntityId entityId, DateTimeOffset effectiveAt, TEntity payload)
 #pragma warning disable VSTHRD002 // Synchronous wrapper for the documented sync API.
-        => SaveCoreAsync(entityId, effectiveAt, payload, requireExisting: false, CancellationToken.None)
+        => SaveSingleAsync(entityId, effectiveAt, payload, requireExisting: false, CancellationToken.None)
+            .GetAwaiter().GetResult();
+#pragma warning restore VSTHRD002
+
+    /// <inheritdoc />
+    public Task<IReadOnlyList<VersionSaveResult<TEntity>>> SaveManyAsync(
+        IEnumerable<VersionWriteRequest<TEntity, TEntityId>> requests,
+        CancellationToken cancellationToken = default)
+        => SaveManyCoreAsync(requests, requireExisting: false, cancellationToken);
+
+    /// <inheritdoc />
+    public IReadOnlyList<VersionSaveResult<TEntity>> SaveMany(
+        IEnumerable<VersionWriteRequest<TEntity, TEntityId>> requests)
+#pragma warning disable VSTHRD002 // Synchronous wrapper for the documented sync API.
+        => SaveManyCoreAsync(requests, requireExisting: false, CancellationToken.None)
             .GetAwaiter().GetResult();
 #pragma warning restore VSTHRD002
 
@@ -57,16 +71,62 @@ public class VersionedRepository<TContext, TEntity, TEntityId, TVersionId>(
         DateTimeOffset effectiveAt,
         TEntity payload,
         CancellationToken cancellationToken = default)
-        => SaveCoreAsync(entityId, effectiveAt, payload, requireExisting: true, cancellationToken);
+        => SaveSingleAsync(entityId, effectiveAt, payload, requireExisting: true, cancellationToken);
 
     /// <inheritdoc />
     public VersionSaveResult<TEntity> Update(TEntityId entityId, DateTimeOffset effectiveAt, TEntity payload)
 #pragma warning disable VSTHRD002 // Synchronous wrapper for the documented sync API.
-        => SaveCoreAsync(entityId, effectiveAt, payload, requireExisting: true, CancellationToken.None)
+        => SaveSingleAsync(entityId, effectiveAt, payload, requireExisting: true, CancellationToken.None)
             .GetAwaiter().GetResult();
 #pragma warning restore VSTHRD002
 
-    private async Task<VersionSaveResult<TEntity>> SaveCoreAsync(
+    /// <inheritdoc />
+    public Task<IReadOnlyList<VersionSaveResult<TEntity>>> UpdateManyAsync(
+        IEnumerable<VersionWriteRequest<TEntity, TEntityId>> requests,
+        CancellationToken cancellationToken = default)
+        => SaveManyCoreAsync(requests, requireExisting: true, cancellationToken);
+
+    /// <inheritdoc />
+    public IReadOnlyList<VersionSaveResult<TEntity>> UpdateMany(
+        IEnumerable<VersionWriteRequest<TEntity, TEntityId>> requests)
+#pragma warning disable VSTHRD002 // Synchronous wrapper for the documented sync API.
+        => SaveManyCoreAsync(requests, requireExisting: true, CancellationToken.None)
+            .GetAwaiter().GetResult();
+#pragma warning restore VSTHRD002
+
+    /// <inheritdoc />
+    public Task<VersionSaveResult<TEntity>> UpsertAsync(
+        TEntityId entityId,
+        DateTimeOffset effectiveAt,
+        TEntity payload,
+        CancellationToken cancellationToken = default)
+        // Upsert == Save: classification (Initial / Current / Archive) is
+        // already exposed on the result so the caller can tell whether they
+        // effectively created the aggregate.
+        => SaveSingleAsync(entityId, effectiveAt, payload, requireExisting: false, cancellationToken);
+
+    /// <inheritdoc />
+    public VersionSaveResult<TEntity> Upsert(TEntityId entityId, DateTimeOffset effectiveAt, TEntity payload)
+#pragma warning disable VSTHRD002 // Synchronous wrapper for the documented sync API.
+        => SaveSingleAsync(entityId, effectiveAt, payload, requireExisting: false, CancellationToken.None)
+            .GetAwaiter().GetResult();
+#pragma warning restore VSTHRD002
+
+    /// <inheritdoc />
+    public Task<IReadOnlyList<VersionSaveResult<TEntity>>> UpsertManyAsync(
+        IEnumerable<VersionWriteRequest<TEntity, TEntityId>> requests,
+        CancellationToken cancellationToken = default)
+        => SaveManyCoreAsync(requests, requireExisting: false, cancellationToken);
+
+    /// <inheritdoc />
+    public IReadOnlyList<VersionSaveResult<TEntity>> UpsertMany(
+        IEnumerable<VersionWriteRequest<TEntity, TEntityId>> requests)
+#pragma warning disable VSTHRD002 // Synchronous wrapper for the documented sync API.
+        => SaveManyCoreAsync(requests, requireExisting: false, CancellationToken.None)
+            .GetAwaiter().GetResult();
+#pragma warning restore VSTHRD002
+
+    private async Task<VersionSaveResult<TEntity>> SaveSingleAsync(
         TEntityId entityId,
         DateTimeOffset effectiveAt,
         TEntity payload,
@@ -74,31 +134,83 @@ public class VersionedRepository<TContext, TEntity, TEntityId, TVersionId>(
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(payload);
-
-        // Stamp the supplied payload with the aggregate id and effective time
-        // so that the SaveChangesInterceptor sees consistent values when it
-        // runs. We do not assign VersionId / RecordedAt / VersionNumber here —
-        // those are the interceptor's responsibility.
-        payload.EntityId = entityId;
-        payload.EffectiveAt = EffectiveAtRounding.Round(effectiveAt, Options.EffectiveAtPrecision);
-
-        // Classify the new row by comparing against the current MAX(EffectiveAt).
-        var shape = VersionedQueryHelpers.GetShape(typeof(TEntity));
-        var maxExisting = await shape.GetMaxEffectiveAtAsync(Context, entityId, async: true, cancellationToken)
+        var request = new VersionWriteRequest<TEntity, TEntityId>(entityId, effectiveAt, payload);
+        var results = await SaveManyCoreAsync(new[] { request }, requireExisting, cancellationToken)
             .ConfigureAwait(false);
+        return results[0];
+    }
 
-        if (requireExisting && maxExisting is null)
+    private async Task<IReadOnlyList<VersionSaveResult<TEntity>>> SaveManyCoreAsync(
+        IEnumerable<VersionWriteRequest<TEntity, TEntityId>> requests,
+        bool requireExisting,
+        CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(requests);
+        var materialised = requests as IReadOnlyList<VersionWriteRequest<TEntity, TEntityId>>
+                           ?? requests.ToList();
+        if (materialised.Count == 0)
         {
-            throw new InvalidOperationException(
-                $"Cannot Update aggregate '{entityId}': no existing versions found. Use SaveAsync to create the first version.");
+            return Array.Empty<VersionSaveResult<TEntity>>();
         }
 
-        var kind = ClassifyKind(payload.EffectiveAt, maxExisting);
+        var shape = VersionedQueryHelpers.GetShape(typeof(TEntity));
+        var precision = Options.EffectiveAtPrecision;
 
-        Set.Add(payload);
+        // Group by EntityId so we issue a single MAX(EffectiveAt) lookup per
+        // aggregate even when a batch contains many writes for the same one.
+        var existingMaxByEntityId = new Dictionary<TEntityId, DateTimeOffset?>();
+        foreach (var request in materialised)
+        {
+            ArgumentNullException.ThrowIfNull(request);
+            ArgumentNullException.ThrowIfNull(request.Payload);
+
+            if (existingMaxByEntityId.ContainsKey(request.EntityId))
+            {
+                continue;
+            }
+
+            var max = await shape.GetMaxEffectiveAtAsync(Context, request.EntityId, async: true, cancellationToken)
+                .ConfigureAwait(false);
+            existingMaxByEntityId[request.EntityId] = max;
+        }
+
+        if (requireExisting)
+        {
+            foreach (var (entityId, max) in existingMaxByEntityId)
+            {
+                if (max is null)
+                {
+                    throw new InvalidOperationException(
+                        $"Cannot Update aggregate '{entityId}': no existing versions found. Use SaveAsync/UpsertAsync to create the first version.");
+                }
+            }
+        }
+
+        var results = new List<VersionSaveResult<TEntity>>(materialised.Count);
+        // Track the running maximum per EntityId so that the second write in a
+        // batch is classified relative to the first write, not the unchanged
+        // database state.
+        var runningMax = new Dictionary<TEntityId, DateTimeOffset?>(existingMaxByEntityId);
+
+        foreach (var request in materialised)
+        {
+            var roundedEffectiveAt = EffectiveAtRounding.Round(request.EffectiveAt, precision);
+            request.Payload.EntityId = request.EntityId;
+            request.Payload.EffectiveAt = roundedEffectiveAt;
+
+            var currentMax = runningMax[request.EntityId];
+            var kind = ClassifyKind(roundedEffectiveAt, currentMax);
+            if (currentMax is null || roundedEffectiveAt > currentMax.Value)
+            {
+                runningMax[request.EntityId] = roundedEffectiveAt;
+            }
+
+            Set.Add(request.Payload);
+            results.Add(new VersionSaveResult<TEntity>(request.Payload, kind));
+        }
+
         await Context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-
-        return new VersionSaveResult<TEntity>(payload, kind);
+        return results;
     }
 
     private static VersionKind ClassifyKind(DateTimeOffset newEffectiveAt, DateTimeOffset? existingMax)
@@ -230,7 +342,7 @@ public class VersionedRepository<TContext, TEntity, TEntityId, TVersionId>(
     {
         ArgumentNullException.ThrowIfNull(tombstonePayload);
         tombstonePayload.IsDeleted = true;
-        return SaveCoreAsync(entityId, effectiveAt, tombstonePayload, requireExisting: false, cancellationToken);
+        return SaveSingleAsync(entityId, effectiveAt, tombstonePayload, requireExisting: false, cancellationToken);
     }
 
     /// <inheritdoc />

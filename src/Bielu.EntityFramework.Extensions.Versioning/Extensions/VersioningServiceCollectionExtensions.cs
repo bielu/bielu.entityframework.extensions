@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
 
 namespace Bielu.EntityFramework.Extensions.Versioning.Extensions;
 
@@ -44,6 +45,10 @@ public static class VersioningServiceCollectionExtensions
         }
 
         services.TryAddSingleton<IVersioningClock, SystemVersioningClock>();
+        // Logging is a hard dependency of the interceptor; register a no-op
+        // implementation if the host application has not wired logging itself
+        // so that AddBieluVersioning() is sufficient on its own.
+        services.AddLogging();
         services.TryAddSingleton<VersioningSaveChangesInterceptor>();
         // Surface the interceptor as IInterceptor so EF Core picks it up
         // automatically from the application service provider.
