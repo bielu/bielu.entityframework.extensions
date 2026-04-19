@@ -1,0 +1,25 @@
+<Project>
+
+    <Import Project="../version.props"/>
+
+    <PropertyGroup>
+      <Title>$(MSBuildProjectName)</Title>
+      <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+      <AssemblyVersion>$(Version)</AssemblyVersion>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Authors>Arkadiusz Biel</Authors>
+        <PackageOutputPath>$(MSBuildProjectDirectory)/../../dist</PackageOutputPath>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <RepositoryUrl>https://github.com/bielu/bielu.entityframework.extensions</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageProjectUrl>https://github.com/bielu/bielu.entityframework.extensions</PackageProjectUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="$(MSBuildThisFileDirectory)../README.md" Pack="true" PackagePath="/" />
+    </ItemGroup>
+
+</Project>
