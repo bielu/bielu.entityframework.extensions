@@ -11,9 +11,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Bielu.EntityFramework.Extensions.Versioning\Bielu.EntityFramework.Extensions.Versioning.csproj" />
-    <ProjectReference Include="..\..\src\Bielu.EntityFramework.Extensions.Versioning.Abstractions\Bielu.EntityFramework.Extensions.Versioning.Abstractions.csproj" />
-    <ProjectReference Include="..\..\src\Bielu.EntityFramework.Extensions.Versioning.OpenTelemetry\Bielu.EntityFramework.Extensions.Versioning.OpenTelemetry.csproj" />
+    <ProjectReference Include="..\Bielu.EntityFramework.Extensions.Versioning\Bielu.EntityFramework.Extensions.Versioning.csproj" />
+    <ProjectReference Include="..\Bielu.EntityFramework.Extensions.Versioning.Abstractions\Bielu.EntityFramework.Extensions.Versioning.Abstractions.csproj" />
+    <ProjectReference Include="..\Bielu.EntityFramework.Extensions.Versioning.OpenTelemetry\Bielu.EntityFramework.Extensions.Versioning.OpenTelemetry.csproj" />
   </ItemGroup>
 
   <ItemGroup>

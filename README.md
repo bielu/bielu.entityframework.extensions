@@ -1,10 +1,45 @@
-# bielu.entityframework.extensions
+# Bielu.EntityFramework.Extensions
 
-Provider-agnostic Entity Framework Core extensions for the bielu ecosystem.
+[![CI](https://github.com/bielu/bielu.entityframework.extensions/actions/workflows/buildAndPublishPackage.yml/badge.svg)](https://github.com/bielu/bielu.entityframework.extensions/actions/workflows/buildAndPublishPackage.yml)
+[![NuGet](https://img.shields.io/nuget/v/Bielu.EntityFramework.Extensions.Versioning.svg)](https://www.nuget.org/packages/Bielu.EntityFramework.Extensions.Versioning/)
+[![NuGet Downloads](https://img.shields.io/nuget/dt/Bielu.EntityFramework.Extensions.Versioning.svg)](https://www.nuget.org/packages/Bielu.EntityFramework.Extensions.Versioning/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-The repository currently ships:
+Bielu.EntityFramework.Extensions is a set of **provider-agnostic Entity Framework Core extensions** that add cross-cutting persistence concerns — starting with content versioning — to any EF Core model without relying on temporal tables, triggers, or provider-specific SQL.
 
-| Package | Purpose |
+Part of the [**bielu ecosystem**](https://github.com/bielu) — a collection of open-source .NET libraries for search, messaging, observability, and infrastructure.
+
+> ⚠️ **Note:** Pre version 1.0.0, the API is regarded as unstable and **breaking changes may be introduced**.
+
+## Key Features
+
+- ✅ **Content versioning for any aggregate** — stable `EntityId` + per-version `VersionId`, with support for inserting versions between two existing ones (late / out-of-order updates)
+- ✅ **Provider-agnostic** — works on every EF Core relational and non-relational provider (SqlServer, Postgres, MySQL, SQLite, Cosmos, InMemory, …); no `SYSTEM_VERSIONING`, no temporal tables, no triggers, no provider-specific JSON, no `xmin`, no raw SQL
+- ✅ **Two equivalent surfaces** — instance methods on `VersionedDbContext` and extension methods on `DbSet<T>` constrained to versioned entities, so you can opt one entity in without changing your context base class
+- ✅ **Save-changes interceptor** — auto-assigns `VersionId`, stamps `RecordedAt`, surfaces collisions as a clear `EffectiveAtCollisionException`, and enforces immutability of past versions
+- ✅ **Soft delete with tombstones** — preserves history; configurable global query filter
+- ✅ **Bulk writes** — `SaveMany` / `UpdateMany` / `UpsertMany` share a single `SaveChangesAsync` (one transaction on relational providers)
+- ✅ **OpenTelemetry instrumentation** — optional companion package adds `ActivitySource` spans and metrics (`versions.added`, `versions.inserted_in_between`, `version.collisions`)
+- ✅ **Benchmarked in CI** — [BenchmarkDotNet](https://benchmarkdotnet.org/) suites run on every PR with a [live dashboard](https://bielu.github.io/bielu.entityframework.extensions/dev/bench/)
+
+## Installation
+
+Install the packages from NuGet:
+
+```bash
+# Core EF Core implementation
+dotnet add package Bielu.EntityFramework.Extensions.Versioning
+
+# Abstractions only (no EF Core dependency) — reference from domain layers
+dotnet add package Bielu.EntityFramework.Extensions.Versioning.Abstractions
+
+# (Optional) OpenTelemetry instrumentation
+dotnet add package Bielu.EntityFramework.Extensions.Versioning.OpenTelemetry
+```
+
+## Packages
+
+| Package | Description |
 | --- | --- |
 | `Bielu.EntityFramework.Extensions.Versioning.Abstractions` | Contracts (no EF Core dependency) so domain layers can reference them. |
 | `Bielu.EntityFramework.Extensions.Versioning` | EF Core implementation: model configuration, `VersionedDbContext`, save-changes interceptor, DI helpers. |
@@ -20,12 +55,6 @@ Adds **content versioning** to any aggregate, where:
 - Each version row has its **own primary key** (`VersionId`).
 - New versions can be **inserted between two existing versions** to handle out-of-order / late updates.
 - Every operation works on **every EF Core relational and non-relational provider** — no `SYSTEM_VERSIONING`, no temporal tables, no triggers, no provider-specific JSON, no `xmin`, no raw SQL.
-
-### Install
-
-```bash
-dotnet add package Bielu.EntityFramework.Extensions.Versioning
-```
 
 ### Define a versioned aggregate
 
@@ -333,7 +362,7 @@ Notes:
 
 ```bash
 dotnet build src/Bielu.EntityFramework.Extensions.slnx
-dotnet test  test/Bielu.EntityFramework.Extensions.Versioning.Tests
+dotnet test  src/Bielu.EntityFramework.Extensions.Versioning.Tests
 ```
 
 The example WebApi can be run directly:
