@@ -6,7 +6,7 @@
     <Project Path="Bielu.EntityFramework.Extensions.Versioning.Benchmarks/Bielu.EntityFramework.Extensions.Versioning.Benchmarks.csproj" />
   </Folder>
   <Folder Name="/test/">
-    <Project Path="..\test\Bielu.EntityFramework.Extensions.Versioning.Tests\Bielu.EntityFramework.Extensions.Versioning.Tests.csproj" />
+    <Project Path="Bielu.EntityFramework.Extensions.Versioning.Tests/Bielu.EntityFramework.Extensions.Versioning.Tests.csproj" />
   </Folder>
   <Folder Name="/examples/">
     <Project Path="..\examples\Bielu.EntityFramework.Extensions.Versioning.Example.WebApi\Bielu.EntityFramework.Extensions.Versioning.Example.WebApi.csproj" />
