@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Bielu.EntityFramework.Extensions.Versioning.Configuration;
+namespace Bielu.EntityFramework.Extensions.Versioning.Modeling;
 
 /// <summary>
 /// Re-usable <see cref="IEntityTypeConfiguration{TEntity}"/> implementation that
@@ -81,7 +81,7 @@ public sealed class VersionedEntityConfiguration<TEntity, TEntityId, TVersionId>
             // Per-EntityId latest-non-deleted is not safely expressible as a
             // simple HasQueryFilter (it requires a self-correlated query that
             // EF Core cannot translate uniformly across providers). We
-            // install a soft-delete filter; the VersionedRepository exposes
+            // install a soft-delete filter; VersionedDbContext exposes
             // "current as-of" semantics via LINQ.
             Expression<Func<TEntity, bool>> filter = e => !e.IsDeleted;
             builder.HasQueryFilter(filter);

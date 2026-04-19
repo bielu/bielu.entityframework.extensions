@@ -1,13 +1,15 @@
 using Bielu.EntityFramework.Extensions.Versioning.Abstractions;
-using Bielu.EntityFramework.Extensions.Versioning.Internal;
+using Bielu.EntityFramework.Extensions.Versioning.ChangeTracking;
+using Bielu.EntityFramework.Extensions.Versioning.Modeling;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 
 namespace Bielu.EntityFramework.Extensions.Versioning.Tests.TestSupport;
 
 internal sealed class TestDbContext(DbContextOptions options, VersioningOptions versioningOptions)
-    : DbContext(options)
+    : VersionedDbContext(options)
 {
     public DbSet<Content> Contents => Set<Content>();
 
@@ -64,6 +66,14 @@ internal sealed class TestHarness : IAsyncDisposable
         var interceptor = new VersioningSaveChangesInterceptor(
             clock, monitor, NullLogger<VersioningSaveChangesInterceptor>.Instance);
 
+        // Wire the clock + options through an application service provider so
+        // that VersionedDbContext.ResolveClock / ResolveOptions discover them
+        // exactly the way they do in production (via UseApplicationServiceProvider).
+        var appServices = new ServiceCollection()
+            .AddSingleton<IVersioningClock>(clock)
+            .AddSingleton<IOptionsMonitor<VersioningOptions>>(monitor)
+            .BuildServiceProvider();
+
         Microsoft.Data.Sqlite.SqliteConnection? sqliteConnection = null;
         DbContextOptions dbOptions;
 
@@ -72,6 +82,7 @@ internal sealed class TestHarness : IAsyncDisposable
             case TestProvider.InMemory:
                 dbOptions = new DbContextOptionsBuilder<TestDbContext>()
                     .UseInMemoryDatabase($"versioning-{Guid.NewGuid()}")
+                    .UseApplicationServiceProvider(appServices)
                     .AddInterceptors(interceptor)
                     .Options;
                 break;
@@ -81,6 +92,7 @@ internal sealed class TestHarness : IAsyncDisposable
                 await sqliteConnection.OpenAsync().ConfigureAwait(false);
                 dbOptions = new DbContextOptionsBuilder<TestDbContext>()
                     .UseSqlite(sqliteConnection)
+                    .UseApplicationServiceProvider(appServices)
                     .AddInterceptors(interceptor)
                     .Options;
                 break;

@@ -1,8 +1,7 @@
 using Bielu.EntityFramework.Extensions.Versioning.Abstractions;
-using Bielu.EntityFramework.Extensions.Versioning.Configuration;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bielu.EntityFramework.Extensions.Versioning;
+namespace Bielu.EntityFramework.Extensions.Versioning.Modeling;
 
 /// <summary>
 /// Convenience extensions for applying versioning conventions to entity types

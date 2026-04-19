@@ -47,7 +47,7 @@ public enum InPlaceUpdateBehavior
 {
     /// <summary>
     /// Throw an <see cref="InvalidOperationException"/>. Modifications must be
-    /// expressed as new versions via the <c>IVersionedRepository</c> API.
+    /// expressed as new versions via the <c>VersionedDbContext</c> API.
     /// </summary>
     Throw = 0,
 

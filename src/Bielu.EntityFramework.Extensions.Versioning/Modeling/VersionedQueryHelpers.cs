@@ -1,13 +1,12 @@
 using System.Collections.Concurrent;
-using System.Reflection;
 using Bielu.EntityFramework.Extensions.Versioning.Abstractions;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bielu.EntityFramework.Extensions.Versioning.Internal;
+namespace Bielu.EntityFramework.Extensions.Versioning.Modeling;
 
 /// <summary>
 /// Builds and caches strongly-typed LINQ expressions used by the interceptor
-/// and the repository. Centralising the expression construction keeps EF
+/// and the save engine. Centralising the expression construction keeps EF
 /// expression trees provider-agnostic (no <c>dynamic</c> or interface casts).
 /// </summary>
 internal static class VersionedQueryHelpers

@@ -1,5 +1,6 @@
-using Bielu.EntityFramework.Extensions.Versioning.Abstractions;
 using Bielu.EntityFramework.Extensions.Versioning;
+using Bielu.EntityFramework.Extensions.Versioning.Abstractions;
+using Bielu.EntityFramework.Extensions.Versioning.Modeling;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bielu.EntityFramework.Extensions.Versioning.Example.WebApi;
@@ -16,8 +17,8 @@ public sealed class Content : VersionedEntity<Guid, Guid>
 
 /// <summary>
 /// Example <see cref="VersionedDbContext"/> derivative — derives from the
-/// optional base class so the <c>db.SaveAsync(...)</c> /
-/// <c>db.UpsertAsync(...)</c> helpers are available directly on the context.
+/// base class so the <c>db.SaveAsync(...)</c> / <c>db.UpsertAsync(...)</c>
+/// helpers are available directly on the context.
 /// </summary>
 public sealed class ContentDbContext(DbContextOptions<ContentDbContext> options)
     : VersionedDbContext(options)

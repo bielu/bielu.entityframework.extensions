@@ -1,11 +1,11 @@
 using Bielu.EntityFramework.Extensions.Versioning.Abstractions;
 
-namespace Bielu.EntityFramework.Extensions.Versioning.Internal;
+namespace Bielu.EntityFramework.Extensions.Versioning.Modeling;
 
 /// <summary>
 /// Helpers that round <see cref="DateTimeOffset"/> values to a given
 /// <see cref="EffectiveAtPrecision"/>. Centralising the logic ensures
-/// consistent behaviour between the repository, the interceptor and any
+/// consistent behaviour between the save engine, the interceptor and any
 /// consumer-side code that needs to compare timestamps with stored values.
 /// </summary>
 internal static class EffectiveAtRounding

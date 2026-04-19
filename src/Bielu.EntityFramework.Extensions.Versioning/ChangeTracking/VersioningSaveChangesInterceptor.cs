@@ -1,11 +1,12 @@
 using Bielu.EntityFramework.Extensions.Versioning.Abstractions;
+using Bielu.EntityFramework.Extensions.Versioning.Modeling;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Bielu.EntityFramework.Extensions.Versioning.Internal;
+namespace Bielu.EntityFramework.Extensions.Versioning.ChangeTracking;
 
 /// <summary>
 /// EF Core <see cref="ISaveChangesInterceptor"/> that enforces the bielu
@@ -151,7 +152,7 @@ public sealed class VersioningSaveChangesInterceptor(
             case InPlaceUpdateBehavior.Throw:
                 throw new InvalidOperationException(
                     $"In-place modification of versioned entity '{entry.Entity.GetType().Name}' is not allowed. " +
-                    "Express modifications as new versions via IVersionedRepository.SaveAsync / UpdateAsync.");
+                    "Express modifications as new versions via VersionedDbContext.SaveAsync / UpdateAsync.");
 
             case InPlaceUpdateBehavior.ConvertToNewVersion:
             {

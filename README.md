@@ -7,7 +7,7 @@ The repository currently ships:
 | Package | Purpose |
 | --- | --- |
 | `Bielu.EntityFramework.Extensions.Versioning.Abstractions` | Contracts (no EF Core dependency) so domain layers can reference them. |
-| `Bielu.EntityFramework.Extensions.Versioning` | EF Core implementation: model configuration, repository, save-changes interceptor, DI helpers. |
+| `Bielu.EntityFramework.Extensions.Versioning` | EF Core implementation: model configuration, `VersionedDbContext`, save-changes interceptor, DI helpers. |
 | `Bielu.EntityFramework.Extensions.Versioning.OpenTelemetry` | Optional `ActivitySource` + metrics for observability. |
 
 ---
@@ -47,9 +47,10 @@ token out of the box.
 
 ```csharp
 using Bielu.EntityFramework.Extensions.Versioning;
+using Bielu.EntityFramework.Extensions.Versioning.Modeling;
 
 public sealed class ContentDbContext(DbContextOptions<ContentDbContext> options)
-    : VersionedDbContext(options)            // optional base class
+    : VersionedDbContext(options)            // required base class
 {
     public DbSet<Content> Contents => Set<Content>();
 
@@ -64,12 +65,29 @@ tiebreaker means legitimate ties don't violate the index), an index on
 `(EntityId, VersionNumber)` so `MAX(VersionNumber)` is an index seek, and
 configures the concurrency token.
 
+Versioning operations (`Save` / `Update` / `Upsert` / `Get*`) are exposed
+exclusively as instance methods on `VersionedDbContext` — there are no
+extension methods on plain `DbContext` or `DbSet<>`. This keeps the
+versioning surface scoped to contexts that actually opt in to it.
+
 ### Register DI
 
-```csharp
-builder.Services.AddBieluVersioning();
-builder.Services.AddVersionedEntity<ContentDbContext, Content, Guid, Guid>();
+`AddVersionedDbContext<TContext>` is a one-liner that internally calls
+`AddBieluVersioning()`, wires `UseApplicationServiceProvider`, and
+registers the `VersioningSaveChangesInterceptor` for you. Pass your
+provider configuration as the callback:
 
+```csharp
+using Bielu.EntityFramework.Extensions.Versioning.Registration;
+
+builder.Services.AddVersionedDbContext<ContentDbContext>((_, options) =>
+    options.UseSqlite("DataSource=content.db"));
+```
+
+If you need full control, the building blocks are still public:
+
+```csharp
+builder.Services.AddBieluVersioning();                        // clock + interceptor + options
 builder.Services.AddDbContext<ContentDbContext>((sp, options) =>
 {
     options.UseSqlite("DataSource=content.db");
@@ -80,15 +98,23 @@ builder.Services.AddDbContext<ContentDbContext>((sp, options) =>
 
 ### Write versions
 
-Three equivalent surfaces are available — pick whichever fits your call-site:
+Two equivalent surfaces are available — pick whichever fits your call-site:
 
 | Surface | Example |
 | --- | --- |
-| Repository | `await repo.SaveAsync(id, effectiveAt, payload);` |
-| `DbContext` extension | `await db.SaveAsync<Content, Guid, Guid>(id, effectiveAt, payload);` |
 | `VersionedDbContext` instance method | `await db.SaveAsync<Content, Guid, Guid>(id, effectiveAt, payload);` |
+| `DbSet<T>` extension | `await db.Contents.SaveAsync<Content, Guid, Guid>(id, effectiveAt, payload);` |
 
-All of `Save` / `Update` / `Upsert` (and their `Many` and async variants) are
+Both surfaces delegate to the same internal save engine, so they are
+guaranteed to behave identically — and you can mix them freely in the same
+context. The `DbSet<T>` extensions only light up on sets whose element
+implements `IVersionedEntity<TEntityId, TVersionId>`, so they don't pollute
+IntelliSense on non-versioned sets. The `DbSet<T>` extensions also work on
+plain `DbContext` derivatives (you don't have to inherit from
+`VersionedDbContext` to use them) — handy when you want to opt one entity
+type into versioning without changing your context base class.
+
+`Save` / `Update` / `Upsert` (and their `Many` and async variants) are
 provided. Every write returns a `VersionSaveResult<TEntity>` whose `Kind`
 classifies the row as one of:
 
@@ -97,12 +123,12 @@ classifies the row as one of:
 - `Archive` — back-dated; sits in the past portion of the timeline.
 
 ```csharp
-var first  = await repo.SaveAsync(id, T1, new Content { Title = "v1" });   // Initial
-var second = await repo.SaveAsync(id, T3, new Content { Title = "v3" });   // Current
+var first  = await db.SaveAsync<Content, Guid, Guid>(id, T1, new Content { Title = "v1" });   // Initial
+var second = await db.SaveAsync<Content, Guid, Guid>(id, T3, new Content { Title = "v3" });   // Current
 
 // Late-arriving update at T2 (T1 < T2 < T3): no renumbering, no special API —
 // just call SaveAsync with the in-between EffectiveAt.
-var inBetween = await repo.SaveAsync(id, T2, new Content { Title = "v2" });
+var inBetween = await db.SaveAsync<Content, Guid, Guid>(id, T2, new Content { Title = "v2" });
 inBetween.Kind.ShouldBe(VersionKind.Archive);
 ```
 
@@ -114,7 +140,7 @@ underlying `SaveChangesAsync` call so they share one transaction on
 relational providers:
 
 ```csharp
-await repo.SaveManyAsync(new[]
+await db.SaveManyAsync<Content, Guid, Guid>(new[]
 {
     new VersionWriteRequest<Content, Guid>(id, T1, new Content { Title = "v1" }),
     new VersionWriteRequest<Content, Guid>(id, T2, new Content { Title = "v2" }),
@@ -124,21 +150,26 @@ await repo.SaveManyAsync(new[]
 
 ### Read versions
 
+The same dual surface is available for reads — `VersionedDbContext`
+instance methods or `DbSet<T>` extensions, your pick:
+
 ```csharp
 // Current (default: as of now). Honours soft-delete tombstones.
-var current = await repo.GetCurrentAsync(id);
+var current = await db.Contents.GetCurrentAsync<Content, Guid, Guid>(id);
+// or:        await db.GetCurrentAsync<Content, Guid, Guid>(id);
 
 // Time-travel.
-var snapshot = await repo.GetCurrentAsync(id, asOf: DateTimeOffset.UtcNow.AddYears(-1));
+var snapshot = await db.Contents.GetCurrentAsync<Content, Guid, Guid>(id, asOf: DateTimeOffset.UtcNow.AddYears(-1));
 
 // Full ordered timeline.
-IReadOnlyList<Content> all = await repo.GetAllVersionsAsync(id);
+IReadOnlyList<Content> all = await db.Contents.GetAllVersionsAsync<Content, Guid, Guid>(id);
 
 // Cheap count: a single MAX(VersionNumber) index seek, independent of history size.
-int total = await repo.GetVersionCountAsync(id);
+int total = await db.Contents.GetVersionCountAsync<Content, Guid, Guid>(id);
 
 // Predecessor / successor of an EffectiveAt point — useful for diffing late inserts.
-var (prev, next) = await repo.GetNeighborsAsync(id, T2) switch { var n => (n.Previous, n.Next) };
+var (prev, next) = await db.Contents.GetNeighborsAsync<Content, Guid, Guid>(id, T2)
+    switch { var n => (n.Previous, n.Next) };
 ```
 
 ### Soft delete
@@ -152,7 +183,7 @@ when the tombstone is the latest version.
 | Option | Default | Behaviour |
 | --- | --- | --- |
 | `VersionIdStrategy` | `NewGuid` | How `VersionId`s are auto-assigned by the interceptor when not pre-populated. `CallerProvided` disables auto-assignment. |
-| `QueryFilterBehavior` | `AllVersions` | Whether to install a soft-delete query filter on versioned entities. The repository methods always call `IgnoreQueryFilters()` themselves, so this only affects ad-hoc LINQ. Set to `AsOfNow` to hide non-current and tombstoned rows by default. |
+| `QueryFilterBehavior` | `AllVersions` | Whether to install a soft-delete query filter on versioned entities. The `VersionedDbContext` read methods always call `IgnoreQueryFilters()` themselves, so this only affects ad-hoc LINQ. Set to `AsOfNow` to hide non-current and tombstoned rows by default. |
 | `InPlaceUpdateBehavior` | `Throw` | What to do when an EF-tracked versioned entity becomes `Modified`. `Throw` enforces immutability; `ConvertToNewVersion` automatically promotes the change to a new version row; `Allow` bypasses the guard for administrative scenarios. |
 | `EffectiveAtPrecision` | `Tick` (verbatim) | Granularity to which incoming `EffectiveAt` timestamps are rounded before persisting (`Tick`, `Microsecond`, `Millisecond`, `Second`). |
 | `DetectCollisionsExplicitly` | `true` | When `true`, the interceptor surfaces `EffectiveAtCollisionException` with a clear message before the provider raises an opaque unique-constraint error. |

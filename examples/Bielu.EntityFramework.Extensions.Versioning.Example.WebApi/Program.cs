@@ -1,27 +1,17 @@
-using Bielu.EntityFramework.Extensions.Versioning;
 using Bielu.EntityFramework.Extensions.Versioning.Abstractions;
 using Bielu.EntityFramework.Extensions.Versioning.Example.WebApi;
-using Bielu.EntityFramework.Extensions.Versioning.Extensions;
-using Bielu.EntityFramework.Extensions.Versioning.Internal;
-using Bielu.EntityFramework.Extensions.Versioning.Repository;
+using Bielu.EntityFramework.Extensions.Versioning.Registration;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Register the bielu versioning subsystem (clock + interceptor + options) and
-// then the typed repository for our Content aggregate.
-builder.Services.AddBieluVersioning();
-builder.Services.AddVersionedEntity<ContentDbContext, Content, Guid, Guid>();
-
-// Provider-agnostic configuration: the same code works on InMemory, Sqlite,
-// SqlServer, Postgres, MySQL, and Cosmos. Sqlite is used here purely so the
-// example runs without any external infrastructure.
-builder.Services.AddDbContext<ContentDbContext>((sp, options) =>
-{
-    options.UseSqlite("DataSource=content.db;Cache=Shared");
-    options.UseApplicationServiceProvider(sp);
-    options.AddInterceptors(sp.GetRequiredService<VersioningSaveChangesInterceptor>());
-});
+// Register the bielu versioning subsystem AND the versioned DbContext (with
+// UseApplicationServiceProvider + the VersioningSaveChangesInterceptor wired
+// for us) in a single call. Provider-agnostic: the same code works on
+// InMemory, Sqlite, SqlServer, Postgres, MySQL, and Cosmos. Sqlite is used
+// here purely so the example runs without any external infrastructure.
+builder.Services.AddVersionedDbContext<ContentDbContext>((_, options) =>
+    options.UseSqlite("DataSource=content.db;Cache=Shared"));
 
 var app = builder.Build();
 
@@ -36,10 +26,10 @@ app.MapPost("/content/{id:guid}", async (
     Guid id,
     DateTimeOffset? effectiveAt,
     Content payload,
-    IVersionedRepository<Content, Guid, Guid> repo,
+    ContentDbContext db,
     IVersioningClock clock) =>
 {
-    var result = await repo.SaveAsync(id, effectiveAt ?? clock.UtcNow, payload);
+    var result = await db.SaveAsync<Content, Guid, Guid>(id, effectiveAt ?? clock.UtcNow, payload);
     return Results.Ok(new { result.Kind, result.Entity.VersionId, result.Entity.VersionNumber });
 });
 
@@ -47,22 +37,22 @@ app.MapPost("/content/{id:guid}", async (
 app.MapGet("/content/{id:guid}", async (
     Guid id,
     DateTimeOffset? asOf,
-    IVersionedRepository<Content, Guid, Guid> repo) =>
+    ContentDbContext db) =>
 {
-    var current = await repo.GetCurrentAsync(id, asOf);
+    var current = await db.GetCurrentAsync<Content, Guid, Guid>(id, asOf);
     return current is null ? Results.NotFound() : Results.Ok(current);
 });
 
 // GET /content/{id}/history            — full ordered timeline
 app.MapGet("/content/{id:guid}/history", async (
     Guid id,
-    IVersionedRepository<Content, Guid, Guid> repo) =>
-        Results.Ok(await repo.GetAllVersionsAsync(id)));
+    ContentDbContext db) =>
+        Results.Ok(await db.GetAllVersionsAsync<Content, Guid, Guid>(id)));
 
 // GET /content/{id}/count              — cheap MAX(VersionNumber) lookup
 app.MapGet("/content/{id:guid}/count", async (
     Guid id,
-    IVersionedRepository<Content, Guid, Guid> repo) =>
-        Results.Ok(new { count = await repo.GetVersionCountAsync(id) }));
+    ContentDbContext db) =>
+        Results.Ok(new { count = await db.GetVersionCountAsync<Content, Guid, Guid>(id) }));
 
 await app.RunAsync();
