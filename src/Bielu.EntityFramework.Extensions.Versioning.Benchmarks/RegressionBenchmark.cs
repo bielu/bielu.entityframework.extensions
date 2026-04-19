@@ -3,7 +3,6 @@ using BenchmarkDotNet.Engines;
 using Bielu.EntityFramework.Extensions.Versioning.Benchmarks.Support;
 using Bielu.EntityFramework.Extensions.Versioning.Reading;
 using Bielu.EntityFramework.Extensions.Versioning.Saving;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bielu.EntityFramework.Extensions.Versioning.Benchmarks;
@@ -17,11 +16,15 @@ namespace Bielu.EntityFramework.Extensions.Versioning.Benchmarks;
 [MinColumn, MaxColumn, MeanColumn, MedianColumn]
 public class RegressionBenchmark
 {
-    private VersionedBenchmarkDbContext? _context;
-    private SqliteConnection? _connection;
-    private FixedClock? _clock;
+    private VersionedBenchmarkHarness? _harness;
+    private VersionedBenchmarkDbContext _context = null!;
+    private FixedClock _clock = null!;
     private Guid[] _entityIds = null!;
     private string _bodyPayload = null!;
+
+    /// <summary>EF Core provider under test.</summary>
+    [Params(BenchmarkProvider.InMemory, BenchmarkProvider.Sqlite)]
+    public BenchmarkProvider Provider { get; set; }
 
     /// <summary>Aggregate count for fast CI execution.</summary>
     [Params(50, 200)]
@@ -34,11 +37,10 @@ public class RegressionBenchmark
     [GlobalSetup]
     public void GlobalSetup()
     {
-        var (ctx, connection, clock) = BenchmarkContextFactory.CreateVersioned(
-            new DateTimeOffset(2026, 1, 1, 0, 0, 0, TimeSpan.Zero));
-        _context = ctx;
-        _connection = connection;
-        _clock = clock;
+        _harness = BenchmarkContextFactory.CreateVersioned(
+            Provider, new DateTimeOffset(2026, 1, 1, 0, 0, 0, TimeSpan.Zero));
+        _context = _harness.Context;
+        _clock = _harness.Clock;
         _bodyPayload = new string('x', 256);
 
         _entityIds = new Guid[AggregateCount];
@@ -49,11 +51,7 @@ public class RegressionBenchmark
     }
 
     [GlobalCleanup]
-    public void GlobalCleanup()
-    {
-        _context?.Dispose();
-        _connection?.Dispose();
-    }
+    public void GlobalCleanup() => _harness?.Dispose();
 
     [IterationSetup(Targets = new[]
     {

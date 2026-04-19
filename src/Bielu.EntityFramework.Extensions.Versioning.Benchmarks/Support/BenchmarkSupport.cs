@@ -77,14 +77,58 @@ internal sealed class FixedOptionsMonitor<T>(T value) : IOptionsMonitor<T>
     }
 }
 
+/// <summary>EF Core provider used by a parameterised benchmark.</summary>
+public enum BenchmarkProvider
+{
+    InMemory = 0,
+    Sqlite = 1,
+}
+
 /// <summary>
-/// Helpers that build SQLite-in-memory backed DbContexts wired with everything
-/// the versioning subsystem needs.
+/// Disposable wrapper around a versioned benchmark context plus the (optional)
+/// SQLite connection that backs it, so callers can dispose both as one unit.
+/// </summary>
+public sealed class VersionedBenchmarkHarness(
+    VersionedBenchmarkDbContext context,
+    SqliteConnection? connection,
+    FixedClock clock) : IDisposable
+{
+    public VersionedBenchmarkDbContext Context { get; } = context;
+    public FixedClock Clock { get; } = clock;
+
+    public void Dispose()
+    {
+        Context.Dispose();
+        connection?.Dispose();
+    }
+}
+
+/// <summary>
+/// Disposable wrapper around a plain (non-versioned) benchmark context plus
+/// the (optional) SQLite connection that backs it.
+/// </summary>
+public sealed class PlainBenchmarkHarness(
+    PlainBenchmarkDbContext context,
+    SqliteConnection? connection) : IDisposable
+{
+    public PlainBenchmarkDbContext Context { get; } = context;
+
+    public void Dispose()
+    {
+        Context.Dispose();
+        connection?.Dispose();
+    }
+}
+
+/// <summary>
+/// Helpers that build DbContexts wired with everything the versioning
+/// subsystem needs, on top of either the EF Core InMemory provider or
+/// SQLite (in-memory) — the same two providers exercised by the unit tests.
 /// </summary>
 public static class BenchmarkContextFactory
 {
-    public static (VersionedBenchmarkDbContext context, SqliteConnection connection, FixedClock clock)
-        CreateVersioned(DateTimeOffset clockStart)
+    public static VersionedBenchmarkHarness CreateVersioned(
+        BenchmarkProvider provider, DateTimeOffset clockStart)
     {
         var clock = new FixedClock(clockStart);
         var versioningOptions = new VersioningOptions();
@@ -97,32 +141,63 @@ public static class BenchmarkContextFactory
             .AddSingleton<IOptionsMonitor<VersioningOptions>>(monitor)
             .BuildServiceProvider();
 
-        var connection = new SqliteConnection("DataSource=:memory:");
-        connection.Open();
+        SqliteConnection? connection = null;
+        DbContextOptions dbOptions;
+        switch (provider)
+        {
+            case BenchmarkProvider.InMemory:
+                dbOptions = new DbContextOptionsBuilder<VersionedBenchmarkDbContext>()
+                    .UseInMemoryDatabase($"versioning-bench-{Guid.NewGuid()}")
+                    .UseApplicationServiceProvider(appServices)
+                    .AddInterceptors(interceptor)
+                    .Options;
+                break;
 
-        var dbOptions = new DbContextOptionsBuilder<VersionedBenchmarkDbContext>()
-            .UseSqlite(connection)
-            .UseApplicationServiceProvider(appServices)
-            .AddInterceptors(interceptor)
-            .Options;
+            case BenchmarkProvider.Sqlite:
+                connection = new SqliteConnection("DataSource=:memory:");
+                connection.Open();
+                dbOptions = new DbContextOptionsBuilder<VersionedBenchmarkDbContext>()
+                    .UseSqlite(connection)
+                    .UseApplicationServiceProvider(appServices)
+                    .AddInterceptors(interceptor)
+                    .Options;
+                break;
+
+            default:
+                throw new ArgumentOutOfRangeException(nameof(provider), provider, null);
+        }
 
         var ctx = new VersionedBenchmarkDbContext(dbOptions, versioningOptions);
         ctx.Database.EnsureCreated();
-        return (ctx, connection, clock);
+        return new VersionedBenchmarkHarness(ctx, connection, clock);
     }
 
-    public static (PlainBenchmarkDbContext context, SqliteConnection connection)
-        CreatePlain()
+    public static PlainBenchmarkHarness CreatePlain(BenchmarkProvider provider)
     {
-        var connection = new SqliteConnection("DataSource=:memory:");
-        connection.Open();
+        SqliteConnection? connection = null;
+        DbContextOptions dbOptions;
+        switch (provider)
+        {
+            case BenchmarkProvider.InMemory:
+                dbOptions = new DbContextOptionsBuilder<PlainBenchmarkDbContext>()
+                    .UseInMemoryDatabase($"plain-bench-{Guid.NewGuid()}")
+                    .Options;
+                break;
 
-        var dbOptions = new DbContextOptionsBuilder<PlainBenchmarkDbContext>()
-            .UseSqlite(connection)
-            .Options;
+            case BenchmarkProvider.Sqlite:
+                connection = new SqliteConnection("DataSource=:memory:");
+                connection.Open();
+                dbOptions = new DbContextOptionsBuilder<PlainBenchmarkDbContext>()
+                    .UseSqlite(connection)
+                    .Options;
+                break;
+
+            default:
+                throw new ArgumentOutOfRangeException(nameof(provider), provider, null);
+        }
 
         var ctx = new PlainBenchmarkDbContext(dbOptions);
         ctx.Database.EnsureCreated();
-        return (ctx, connection);
+        return new PlainBenchmarkHarness(ctx, connection);
     }
 }

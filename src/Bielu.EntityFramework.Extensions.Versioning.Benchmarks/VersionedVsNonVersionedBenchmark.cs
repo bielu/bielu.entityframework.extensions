@@ -3,7 +3,6 @@ using BenchmarkDotNet.Engines;
 using Bielu.EntityFramework.Extensions.Versioning.Benchmarks.Support;
 using Bielu.EntityFramework.Extensions.Versioning.Reading;
 using Bielu.EntityFramework.Extensions.Versioning.Saving;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bielu.EntityFramework.Extensions.Versioning.Benchmarks;
@@ -23,15 +22,18 @@ namespace Bielu.EntityFramework.Extensions.Versioning.Benchmarks;
 [GroupBenchmarksBy(BenchmarkDotNet.Configs.BenchmarkLogicalGroupRule.ByCategory)]
 public class VersionedVsNonVersionedBenchmark
 {
-    private VersionedBenchmarkDbContext? _versionedContext;
-    private SqliteConnection? _versionedConnection;
-    private FixedClock? _clock;
-
-    private PlainBenchmarkDbContext? _plainContext;
-    private SqliteConnection? _plainConnection;
+    private VersionedBenchmarkHarness? _versionedHarness;
+    private PlainBenchmarkHarness? _plainHarness;
+    private VersionedBenchmarkDbContext _versionedContext = null!;
+    private PlainBenchmarkDbContext _plainContext = null!;
+    private FixedClock _clock = null!;
 
     private Guid[] _ids = null!;
     private string _body = null!;
+
+    /// <summary>EF Core provider used for both contexts in this run.</summary>
+    [Params(BenchmarkProvider.InMemory, BenchmarkProvider.Sqlite)]
+    public BenchmarkProvider Provider { get; set; }
 
     [Params(50, 200)]
     public int AggregateCount { get; set; }
@@ -43,15 +45,13 @@ public class VersionedVsNonVersionedBenchmark
     [GlobalSetup]
     public void GlobalSetup()
     {
-        var (vctx, vconn, clock) = BenchmarkContextFactory.CreateVersioned(
-            new DateTimeOffset(2026, 1, 1, 0, 0, 0, TimeSpan.Zero));
-        _versionedContext = vctx;
-        _versionedConnection = vconn;
-        _clock = clock;
+        _versionedHarness = BenchmarkContextFactory.CreateVersioned(
+            Provider, new DateTimeOffset(2026, 1, 1, 0, 0, 0, TimeSpan.Zero));
+        _versionedContext = _versionedHarness.Context;
+        _clock = _versionedHarness.Clock;
 
-        var (pctx, pconn) = BenchmarkContextFactory.CreatePlain();
-        _plainContext = pctx;
-        _plainConnection = pconn;
+        _plainHarness = BenchmarkContextFactory.CreatePlain(Provider);
+        _plainContext = _plainHarness.Context;
 
         _body = new string('x', 256);
         _ids = new Guid[AggregateCount];
@@ -64,10 +64,8 @@ public class VersionedVsNonVersionedBenchmark
     [GlobalCleanup]
     public void GlobalCleanup()
     {
-        _versionedContext?.Dispose();
-        _versionedConnection?.Dispose();
-        _plainContext?.Dispose();
-        _plainConnection?.Dispose();
+        _versionedHarness?.Dispose();
+        _plainHarness?.Dispose();
     }
 
     // -----------------------------------------------------------------------

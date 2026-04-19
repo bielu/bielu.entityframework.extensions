@@ -54,7 +54,7 @@ end-to-end against a SQLite in-memory database.
 | `GetAllVersionsAsync`       | Reading the full version history per aggregate               |
 | `GetVersionCountAsync`      | Counting versions per aggregate                              |
 
-Parameters: `AggregateCount = {50, 200}`, `VersionsPerAggregate = {1, 10}`.
+Parameters: `Provider = {InMemory, Sqlite}`, `AggregateCount = {50, 200}`, `VersionsPerAggregate = {1, 10}`.
 
 ### `VersionedVsNonVersionedBenchmark`
 
@@ -72,9 +72,10 @@ workload using a plain DbContext. Each scenario is grouped via
 | `ReadCurrent` | `GetCurrentAsync`                      | `FindAsync` (`AsNoTracking`)          |
 | `ReadHistory` | `GetAllVersionsAsync`                  | `Where(id).ToListAsync()`             |
 
-> Both contexts use SQLite in-memory so the I/O surface is comparable; the
-> measured delta therefore reflects the overhead of the versioning logic
-> itself rather than the storage engine.
+> Both contexts run side-by-side on the same EF Core provider, parameterised
+> over **InMemory** and **SQLite (in-memory)** — the same providers exercised
+> by the unit tests. The measured delta therefore reflects the overhead of
+> the versioning logic itself rather than the storage engine.
 
 ## CI/CD Integration
 
