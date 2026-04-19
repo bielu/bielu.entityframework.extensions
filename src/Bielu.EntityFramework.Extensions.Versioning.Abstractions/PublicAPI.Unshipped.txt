@@ -1,0 +1,81 @@
+#nullable enable
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.EffectiveAtCollisionException
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.EffectiveAtCollisionException.EffectiveAt.get -> System.DateTimeOffset?
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.EffectiveAtCollisionException.EffectiveAtCollisionException() -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.EffectiveAtCollisionException.EffectiveAtCollisionException(object! entityId, System.DateTimeOffset effectiveAt) -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.EffectiveAtCollisionException.EffectiveAtCollisionException(string! message) -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.EffectiveAtCollisionException.EffectiveAtCollisionException(string! message, System.Exception! innerException) -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.EffectiveAtCollisionException.EntityId.get -> object?
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.EffectiveAtPrecision
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.EffectiveAtPrecision.Microsecond = 1 -> Bielu.EntityFramework.Extensions.Versioning.Abstractions.EffectiveAtPrecision
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.EffectiveAtPrecision.Millisecond = 2 -> Bielu.EntityFramework.Extensions.Versioning.Abstractions.EffectiveAtPrecision
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.EffectiveAtPrecision.Second = 3 -> Bielu.EntityFramework.Extensions.Versioning.Abstractions.EffectiveAtPrecision
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.EffectiveAtPrecision.Tick = 0 -> Bielu.EntityFramework.Extensions.Versioning.Abstractions.EffectiveAtPrecision
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.InPlaceUpdateBehavior
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.InPlaceUpdateBehavior.Allow = 2 -> Bielu.EntityFramework.Extensions.Versioning.Abstractions.InPlaceUpdateBehavior
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.InPlaceUpdateBehavior.ConvertToNewVersion = 1 -> Bielu.EntityFramework.Extensions.Versioning.Abstractions.InPlaceUpdateBehavior
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.InPlaceUpdateBehavior.Throw = 0 -> Bielu.EntityFramework.Extensions.Versioning.Abstractions.InPlaceUpdateBehavior
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.IVersionedEntity
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.IVersionedEntity.EffectiveAt.get -> System.DateTimeOffset
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.IVersionedEntity.EffectiveAt.set -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.IVersionedEntity.IsDeleted.get -> bool
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.IVersionedEntity.IsDeleted.set -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.IVersionedEntity.RecordedAt.get -> System.DateTimeOffset
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.IVersionedEntity.RecordedAt.set -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.IVersionedEntity.VersionNumber.get -> int
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.IVersionedEntity.VersionNumber.set -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.IVersionedEntity<TEntityId, TVersionId>
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.IVersionedEntity<TEntityId, TVersionId>.EntityId.get -> TEntityId
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.IVersionedEntity<TEntityId, TVersionId>.EntityId.set -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.IVersionedEntity<TEntityId, TVersionId>.VersionId.get -> TVersionId
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.IVersionedEntity<TEntityId, TVersionId>.VersionId.set -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.IVersioningClock
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.IVersioningClock.UtcNow.get -> System.DateTimeOffset
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.QueryFilterBehavior
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.QueryFilterBehavior.AllVersions = 0 -> Bielu.EntityFramework.Extensions.Versioning.Abstractions.QueryFilterBehavior
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.QueryFilterBehavior.HideTombstones = 1 -> Bielu.EntityFramework.Extensions.Versioning.Abstractions.QueryFilterBehavior
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.SystemVersioningClock
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.SystemVersioningClock.SystemVersioningClock() -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.SystemVersioningClock.UtcNow.get -> System.DateTimeOffset
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersionConflictException
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersionConflictException.VersionConflictException() -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersionConflictException.VersionConflictException(string! message) -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersionConflictException.VersionConflictException(string! message, System.Exception! innerException) -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersionedEntity<TEntityId, TVersionId>
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersionedEntity<TEntityId, TVersionId>.ConcurrencyToken.get -> System.Guid
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersionedEntity<TEntityId, TVersionId>.ConcurrencyToken.set -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersionedEntity<TEntityId, TVersionId>.EffectiveAt.get -> System.DateTimeOffset
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersionedEntity<TEntityId, TVersionId>.EffectiveAt.set -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersionedEntity<TEntityId, TVersionId>.EntityId.get -> TEntityId
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersionedEntity<TEntityId, TVersionId>.EntityId.set -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersionedEntity<TEntityId, TVersionId>.IsDeleted.get -> bool
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersionedEntity<TEntityId, TVersionId>.IsDeleted.set -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersionedEntity<TEntityId, TVersionId>.RecordedAt.get -> System.DateTimeOffset
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersionedEntity<TEntityId, TVersionId>.RecordedAt.set -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersionedEntity<TEntityId, TVersionId>.VersionedEntity() -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersionedEntity<TEntityId, TVersionId>.VersionId.get -> TVersionId
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersionedEntity<TEntityId, TVersionId>.VersionId.set -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersionedEntity<TEntityId, TVersionId>.VersionNumber.get -> int
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersionedEntity<TEntityId, TVersionId>.VersionNumber.set -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersionIdStrategy
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersionIdStrategy.CallerProvided = 1 -> Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersionIdStrategy
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersionIdStrategy.NewGuid = 0 -> Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersionIdStrategy
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersioningException
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersioningException.VersioningException() -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersioningException.VersioningException(string! message) -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersioningException.VersioningException(string! message, System.Exception! innerException) -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersioningOptions
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersioningOptions.AllowEffectiveAtTies.get -> bool
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersioningOptions.AllowEffectiveAtTies.set -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersioningOptions.DetectCollisionsExplicitly.get -> bool
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersioningOptions.DetectCollisionsExplicitly.set -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersioningOptions.EffectiveAtPrecision.get -> Bielu.EntityFramework.Extensions.Versioning.Abstractions.EffectiveAtPrecision
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersioningOptions.EffectiveAtPrecision.set -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersioningOptions.InPlaceUpdateBehavior.get -> Bielu.EntityFramework.Extensions.Versioning.Abstractions.InPlaceUpdateBehavior
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersioningOptions.InPlaceUpdateBehavior.set -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersioningOptions.QueryFilterBehavior.get -> Bielu.EntityFramework.Extensions.Versioning.Abstractions.QueryFilterBehavior
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersioningOptions.QueryFilterBehavior.set -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersioningOptions.VersionIdStrategy.get -> Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersionIdStrategy
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersioningOptions.VersionIdStrategy.set -> void
+Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersioningOptions.VersioningOptions() -> void
+const Bielu.EntityFramework.Extensions.Versioning.Abstractions.VersioningOptions.SectionName = "BieluVersioning" -> string!

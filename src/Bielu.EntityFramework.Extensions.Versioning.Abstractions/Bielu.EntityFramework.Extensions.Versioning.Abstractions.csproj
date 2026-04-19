@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>Bielu.EntityFramework.Extensions.Versioning.Abstractions</RootNamespace>
+    <Description>Bielu.EntityFramework.Extensions.Versioning.Abstractions - provider-agnostic contracts (IVersionedEntity, IVersioningClock, options, exceptions) for content versioning with EF Core.</Description>
+    <PackageTags>entityframework;efcore;versioning;content;history;abstractions</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Bielu.StaticCode.Analyzers">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="PublicAPI.Shipped.txt" />
+    <AdditionalFiles Include="PublicAPI.Unshipped.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Bielu.EntityFramework.Extensions.Versioning" />
+    <InternalsVisibleTo Include="Bielu.EntityFramework.Extensions.Versioning.OpenTelemetry" />
+    <InternalsVisibleTo Include="Bielu.EntityFramework.Extensions.Versioning.Tests" />
+  </ItemGroup>
+
+</Project>

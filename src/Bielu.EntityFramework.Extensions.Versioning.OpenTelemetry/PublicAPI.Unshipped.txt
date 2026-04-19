@@ -1,0 +1,12 @@
+#nullable enable
+Bielu.EntityFramework.Extensions.Versioning.OpenTelemetry.VersioningActivitySource
+Bielu.EntityFramework.Extensions.Versioning.OpenTelemetry.VersioningMetrics
+static readonly Bielu.EntityFramework.Extensions.Versioning.OpenTelemetry.VersioningActivitySource.Name -> string!
+static readonly Bielu.EntityFramework.Extensions.Versioning.OpenTelemetry.VersioningActivitySource.Source -> System.Diagnostics.ActivitySource!
+static readonly Bielu.EntityFramework.Extensions.Versioning.OpenTelemetry.VersioningActivitySource.Version -> string!
+static readonly Bielu.EntityFramework.Extensions.Versioning.OpenTelemetry.VersioningMetrics.Meter -> System.Diagnostics.Metrics.Meter!
+static readonly Bielu.EntityFramework.Extensions.Versioning.OpenTelemetry.VersioningMetrics.Name -> string!
+static readonly Bielu.EntityFramework.Extensions.Versioning.OpenTelemetry.VersioningMetrics.Version -> string!
+static readonly Bielu.EntityFramework.Extensions.Versioning.OpenTelemetry.VersioningMetrics.VersionCollisions -> System.Diagnostics.Metrics.Counter<long>!
+static readonly Bielu.EntityFramework.Extensions.Versioning.OpenTelemetry.VersioningMetrics.VersionsAdded -> System.Diagnostics.Metrics.Counter<long>!
+static readonly Bielu.EntityFramework.Extensions.Versioning.OpenTelemetry.VersioningMetrics.VersionsInsertedInBetween -> System.Diagnostics.Metrics.Counter<long>!

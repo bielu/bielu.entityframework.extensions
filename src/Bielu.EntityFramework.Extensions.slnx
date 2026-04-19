@@ -1,0 +1,22 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="Bielu.EntityFramework.Extensions.Versioning.Abstractions/Bielu.EntityFramework.Extensions.Versioning.Abstractions.csproj" />
+    <Project Path="Bielu.EntityFramework.Extensions.Versioning/Bielu.EntityFramework.Extensions.Versioning.csproj" />
+    <Project Path="Bielu.EntityFramework.Extensions.Versioning.OpenTelemetry/Bielu.EntityFramework.Extensions.Versioning.OpenTelemetry.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="..\test\Bielu.EntityFramework.Extensions.Versioning.Tests\Bielu.EntityFramework.Extensions.Versioning.Tests.csproj" />
+  </Folder>
+  <Folder Name="/examples/">
+    <Project Path="..\examples\Bielu.EntityFramework.Extensions.Versioning.Example.WebApi\Bielu.EntityFramework.Extensions.Versioning.Example.WebApi.csproj" />
+  </Folder>
+  <Folder Name="/Solution Files/">
+    <File Path="../.gitignore" />
+    <File Path="../CODEOWNERS" />
+    <File Path="../LICENSE" />
+    <File Path="../README.md" />
+    <File Path="../Directory.Packages.props" />
+    <File Path="../version.props" />
+    <File Path="Directory.Build.props" />
+  </Folder>
+</Solution>
