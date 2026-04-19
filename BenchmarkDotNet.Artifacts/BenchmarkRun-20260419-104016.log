@@ -1,0 +1,1178 @@
+// Validating benchmarks:
+//    * No exporters defined, results will not be persisted.
+
+// ***** BenchmarkRunner: Start   *****
+// ***** Found 16 benchmark(s) in total *****
+// ***** Building 1 exe(s) in Parallel: Start   *****
+Unable to find .sln or .csproj file. Will use current directory /home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions to search for project file. If you don't use .sln file on purpose it should not be a problem.
+// start dotnet  restore --nodeReuse:false /p:UseSharedCompilation=false /p:Deterministic=true /p:Optimize=true /p:ArtifactsPath="/home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions/src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/bin/Release/net10.0/Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1/" /p:OutDir="/home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions/src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/bin/Release/net10.0/Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1/bin/Release/net10.0/" /p:OutputPath="/home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions/src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/bin/Release/net10.0/Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1/bin/Release/net10.0/" /p:PublishDir="/home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions/src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/bin/Release/net10.0/Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1/publish/" in /home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions/src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/bin/Release/net10.0/Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1
+// command took 1.42 sec and exited with 0
+// start dotnet  build -c Release --no-restore --nodeReuse:false /p:UseSharedCompilation=false /p:Deterministic=true /p:Optimize=true /p:ArtifactsPath="/home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions/src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/bin/Release/net10.0/Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1/" /p:OutDir="/home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions/src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/bin/Release/net10.0/Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1/bin/Release/net10.0/" /p:OutputPath="/home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions/src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/bin/Release/net10.0/Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1/bin/Release/net10.0/" /p:PublishDir="/home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions/src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/bin/Release/net10.0/Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1/publish/" --output "/home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions/src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/bin/Release/net10.0/Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1/bin/Release/net10.0/" in /home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions/src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/bin/Release/net10.0/Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1
+// command took 11.18 sec and exited with 0
+// ***** Done, took 00:00:12 (12.66 sec)   *****
+// Found 8 benchmarks:
+//   RegressionBenchmark.'GetCurrentAsync per aggregate': Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1) [AggregateCount=50, VersionsPerAggregate=1]
+//   RegressionBenchmark.'GetCurrentAsync per aggregate': .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0, IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1) [AggregateCount=50, VersionsPerAggregate=1]
+//   RegressionBenchmark.'GetCurrentAsync per aggregate': Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1) [AggregateCount=50, VersionsPerAggregate=10]
+//   RegressionBenchmark.'GetCurrentAsync per aggregate': .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0, IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1) [AggregateCount=50, VersionsPerAggregate=10]
+//   RegressionBenchmark.'GetCurrentAsync per aggregate': Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1) [AggregateCount=200, VersionsPerAggregate=1]
+//   RegressionBenchmark.'GetCurrentAsync per aggregate': .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0, IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1) [AggregateCount=200, VersionsPerAggregate=1]
+//   RegressionBenchmark.'GetCurrentAsync per aggregate': Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1) [AggregateCount=200, VersionsPerAggregate=10]
+//   RegressionBenchmark.'GetCurrentAsync per aggregate': .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0, IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1) [AggregateCount=200, VersionsPerAggregate=10]
+
+// **************************
+// Benchmark: RegressionBenchmark.'GetCurrentAsync per aggregate': Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1) [AggregateCount=50, VersionsPerAggregate=1]
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1.dll --anonymousPipes 163 164 --benchmarkName "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetCurrentAsync(AggregateCount: 50, VersionsPerAggregate: 1)" --job "InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1" --benchmarkId 0 in /home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions/src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/bin/Release/net10.0/Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX512 BITALG+VBMI2+VNNI+VPOPCNTDQ,AVX512 IFMA+VBMI,AVX512 F+BW+CD+DQ+VL,AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1)
+
+OverheadJitting  1: 1 op, 151707.00 ns, 151.7070 us/op
+WorkloadJitting  1: 1 op, 21993996.00 ns, 21.9940 ms/op
+
+OverheadWarmup   1: 1 op, 200.00 ns, 200.0000 ns/op
+OverheadWarmup   2: 1 op, 200.00 ns, 200.0000 ns/op
+OverheadWarmup   3: 1 op, 200.00 ns, 200.0000 ns/op
+OverheadWarmup   4: 1 op, 220.00 ns, 220.0000 ns/op
+OverheadWarmup   5: 1 op, 491.00 ns, 491.0000 ns/op
+OverheadWarmup   6: 1 op, 211.00 ns, 211.0000 ns/op
+
+OverheadActual   1: 1 op, 321.00 ns, 321.0000 ns/op
+OverheadActual   2: 1 op, 230.00 ns, 230.0000 ns/op
+OverheadActual   3: 1 op, 521.00 ns, 521.0000 ns/op
+OverheadActual   4: 1 op, 430.00 ns, 430.0000 ns/op
+OverheadActual   5: 1 op, 211.00 ns, 211.0000 ns/op
+OverheadActual   6: 1 op, 190.00 ns, 190.0000 ns/op
+OverheadActual   7: 1 op, 200.00 ns, 200.0000 ns/op
+OverheadActual   8: 1 op, 2384.00 ns, 2.3840 us/op
+OverheadActual   9: 1 op, 220.00 ns, 220.0000 ns/op
+OverheadActual  10: 1 op, 191.00 ns, 191.0000 ns/op
+OverheadActual  11: 1 op, 250.00 ns, 250.0000 ns/op
+OverheadActual  12: 1 op, 221.00 ns, 221.0000 ns/op
+OverheadActual  13: 1 op, 200.00 ns, 200.0000 ns/op
+OverheadActual  14: 1 op, 221.00 ns, 221.0000 ns/op
+OverheadActual  15: 1 op, 200.00 ns, 200.0000 ns/op
+OverheadActual  16: 1 op, 320.00 ns, 320.0000 ns/op
+OverheadActual  17: 1 op, 240.00 ns, 240.0000 ns/op
+OverheadActual  18: 1 op, 191.00 ns, 191.0000 ns/op
+OverheadActual  19: 1 op, 190.00 ns, 190.0000 ns/op
+OverheadActual  20: 1 op, 221.00 ns, 221.0000 ns/op
+
+WorkloadWarmup   1: 1 op, 7714024.00 ns, 7.7140 ms/op
+
+// BeforeActualRun
+WorkloadActual   1: 1 op, 7387770.00 ns, 7.3878 ms/op
+WorkloadActual   2: 1 op, 7640850.00 ns, 7.6409 ms/op
+WorkloadActual   3: 1 op, 10300819.00 ns, 10.3008 ms/op
+WorkloadActual   4: 1 op, 8943573.00 ns, 8.9436 ms/op
+WorkloadActual   5: 1 op, 9469562.00 ns, 9.4696 ms/op
+
+// AfterActualRun
+WorkloadResult   1: 1 op, 7387549.00 ns, 7.3875 ms/op
+WorkloadResult   2: 1 op, 7640629.00 ns, 7.6406 ms/op
+WorkloadResult   3: 1 op, 10300598.00 ns, 10.3006 ms/op
+WorkloadResult   4: 1 op, 8943352.00 ns, 8.9434 ms/op
+WorkloadResult   5: 1 op, 9469341.00 ns, 9.4693 ms/op
+// GC:  0 0 0 852544 1
+// Threading:  0 0 1
+
+// AfterAll
+// Benchmark Process 4884 has exited with code 0.
+
+Mean = 8.748 ms, StdErr = 0.550 ms (6.28%), N = 5, StdDev = 1.229 ms
+Min = 7.388 ms, Q1 = 7.641 ms, Median = 8.943 ms, Q3 = 9.469 ms, Max = 10.301 ms
+IQR = 1.829 ms, LowerFence = 4.898 ms, UpperFence = 12.212 ms
+ConfidenceInterval = [4.014 ms; 13.482 ms] (CI 99.9%), Margin = 4.734 ms (54.12% of Mean)
+Skewness = 0.03, Kurtosis = 0.96, MValue = 2
+
+// ** Remained 15 (93.8 %) benchmark(s) to run. Estimated finish 2026-04-19 10:40 (0h 0m from now) **
+// **************************
+// Benchmark: RegressionBenchmark.'GetCurrentAsync per aggregate': .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0, IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1) [AggregateCount=50, VersionsPerAggregate=1]
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1.dll --anonymousPipes 163 164 --benchmarkName "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetCurrentAsync(AggregateCount: 50, VersionsPerAggregate: 1)" --job ".NET 10.0" --benchmarkId 1 in /home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions/src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/bin/Release/net10.0/Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX512 BITALG+VBMI2+VNNI+VPOPCNTDQ,AVX512 IFMA+VBMI,AVX512 F+BW+CD+DQ+VL,AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: .NET 10.0(IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1)
+
+// BeforeActualRun
+WorkloadActual   1: 1 op, 22208738.00 ns, 22.2087 ms/op
+
+// AfterActualRun
+WorkloadResult   1: 1 op, 22208738.00 ns, 22.2087 ms/op
+// GC:  0 0 0 845496 1
+// Threading:  0 0 1
+
+// AfterAll
+// Benchmark Process 4898 has exited with code 0.
+
+Mean = 22.209 ms, StdErr = 0.000 ms (0.00%), N = 1, StdDev = 0.000 ms
+Min = 22.209 ms, Q1 = 22.209 ms, Median = 22.209 ms, Q3 = 22.209 ms, Max = 22.209 ms
+IQR = 0.000 ms, LowerFence = 22.209 ms, UpperFence = 22.209 ms
+ConfidenceInterval = [NaN ms; NaN ms] (CI 99.9%), Margin = NaN ms (NaN% of Mean)
+Skewness = NaN, Kurtosis = NaN, MValue = 2
+
+// ** Remained 14 (87.5 %) benchmark(s) to run. Estimated finish 2026-04-19 10:40 (0h 0m from now) **
+// **************************
+// Benchmark: RegressionBenchmark.'GetCurrentAsync per aggregate': Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1) [AggregateCount=50, VersionsPerAggregate=10]
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1.dll --anonymousPipes 163 164 --benchmarkName "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetCurrentAsync(AggregateCount: 50, VersionsPerAggregate: 10)" --job "InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1" --benchmarkId 2 in /home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions/src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/bin/Release/net10.0/Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX512 BITALG+VBMI2+VNNI+VPOPCNTDQ,AVX512 IFMA+VBMI,AVX512 F+BW+CD+DQ+VL,AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1)
+
+OverheadJitting  1: 1 op, 155573.00 ns, 155.5730 us/op
+WorkloadJitting  1: 1 op, 24483724.00 ns, 24.4837 ms/op
+
+OverheadWarmup   1: 1 op, 571.00 ns, 571.0000 ns/op
+OverheadWarmup   2: 1 op, 541.00 ns, 541.0000 ns/op
+OverheadWarmup   3: 1 op, 291.00 ns, 291.0000 ns/op
+OverheadWarmup   4: 1 op, 251.00 ns, 251.0000 ns/op
+OverheadWarmup   5: 1 op, 530.00 ns, 530.0000 ns/op
+OverheadWarmup   6: 1 op, 271.00 ns, 271.0000 ns/op
+OverheadWarmup   7: 1 op, 401.00 ns, 401.0000 ns/op
+OverheadWarmup   8: 1 op, 371.00 ns, 371.0000 ns/op
+
+OverheadActual   1: 1 op, 301.00 ns, 301.0000 ns/op
+OverheadActual   2: 1 op, 1031.00 ns, 1.0310 us/op
+OverheadActual   3: 1 op, 441.00 ns, 441.0000 ns/op
+OverheadActual   4: 1 op, 260.00 ns, 260.0000 ns/op
+OverheadActual   5: 1 op, 281.00 ns, 281.0000 ns/op
+OverheadActual   6: 1 op, 240.00 ns, 240.0000 ns/op
+OverheadActual   7: 1 op, 270.00 ns, 270.0000 ns/op
+OverheadActual   8: 1 op, 261.00 ns, 261.0000 ns/op
+OverheadActual   9: 1 op, 241.00 ns, 241.0000 ns/op
+OverheadActual  10: 1 op, 441.00 ns, 441.0000 ns/op
+OverheadActual  11: 1 op, 261.00 ns, 261.0000 ns/op
+OverheadActual  12: 1 op, 641.00 ns, 641.0000 ns/op
+OverheadActual  13: 1 op, 260.00 ns, 260.0000 ns/op
+OverheadActual  14: 1 op, 381.00 ns, 381.0000 ns/op
+OverheadActual  15: 1 op, 450.00 ns, 450.0000 ns/op
+OverheadActual  16: 1 op, 260.00 ns, 260.0000 ns/op
+OverheadActual  17: 1 op, 240.00 ns, 240.0000 ns/op
+OverheadActual  18: 1 op, 260.00 ns, 260.0000 ns/op
+OverheadActual  19: 1 op, 351.00 ns, 351.0000 ns/op
+OverheadActual  20: 1 op, 240.00 ns, 240.0000 ns/op
+
+WorkloadWarmup   1: 1 op, 9449243.00 ns, 9.4492 ms/op
+
+// BeforeActualRun
+WorkloadActual   1: 1 op, 8860089.00 ns, 8.8601 ms/op
+WorkloadActual   2: 1 op, 6585888.00 ns, 6.5859 ms/op
+WorkloadActual   3: 1 op, 5651397.00 ns, 5.6514 ms/op
+WorkloadActual   4: 1 op, 4955924.00 ns, 4.9559 ms/op
+WorkloadActual   5: 1 op, 3136805.00 ns, 3.1368 ms/op
+
+// AfterActualRun
+WorkloadResult   1: 1 op, 8859823.50 ns, 8.8598 ms/op
+WorkloadResult   2: 1 op, 6585622.50 ns, 6.5856 ms/op
+WorkloadResult   3: 1 op, 5651131.50 ns, 5.6511 ms/op
+WorkloadResult   4: 1 op, 4955658.50 ns, 4.9557 ms/op
+WorkloadResult   5: 1 op, 3136539.50 ns, 3.1365 ms/op
+// GC:  0 0 0 825744 1
+// Threading:  0 0 1
+
+// AfterAll
+// Benchmark Process 4910 has exited with code 0.
+
+Mean = 5.838 ms, StdErr = 0.943 ms (16.16%), N = 5, StdDev = 2.110 ms
+Min = 3.137 ms, Q1 = 4.956 ms, Median = 5.651 ms, Q3 = 6.586 ms, Max = 8.860 ms
+IQR = 1.630 ms, LowerFence = 2.511 ms, UpperFence = 9.031 ms
+ConfidenceInterval = [-2.286 ms; 13.961 ms] (CI 99.9%), Margin = 8.123 ms (139.15% of Mean)
+Skewness = 0.16, Kurtosis = 1.39, MValue = 2
+
+// ** Remained 13 (81.2 %) benchmark(s) to run. Estimated finish 2026-04-19 10:41 (0h 0m from now) **
+// **************************
+// Benchmark: RegressionBenchmark.'GetCurrentAsync per aggregate': .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0, IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1) [AggregateCount=50, VersionsPerAggregate=10]
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1.dll --anonymousPipes 163 164 --benchmarkName "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetCurrentAsync(AggregateCount: 50, VersionsPerAggregate: 10)" --job ".NET 10.0" --benchmarkId 3 in /home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions/src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/bin/Release/net10.0/Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX512 BITALG+VBMI2+VNNI+VPOPCNTDQ,AVX512 IFMA+VBMI,AVX512 F+BW+CD+DQ+VL,AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: .NET 10.0(IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1)
+
+// BeforeActualRun
+WorkloadActual   1: 1 op, 24301010.00 ns, 24.3010 ms/op
+
+// AfterActualRun
+WorkloadResult   1: 1 op, 24301010.00 ns, 24.3010 ms/op
+// GC:  0 0 0 845896 1
+// Threading:  0 0 1
+
+// AfterAll
+// Benchmark Process 4925 has exited with code 0.
+
+Mean = 24.301 ms, StdErr = 0.000 ms (0.00%), N = 1, StdDev = 0.000 ms
+Min = 24.301 ms, Q1 = 24.301 ms, Median = 24.301 ms, Q3 = 24.301 ms, Max = 24.301 ms
+IQR = 0.000 ms, LowerFence = 24.301 ms, UpperFence = 24.301 ms
+ConfidenceInterval = [NaN ms; NaN ms] (CI 99.9%), Margin = NaN ms (NaN% of Mean)
+Skewness = NaN, Kurtosis = NaN, MValue = 2
+
+// ** Remained 12 (75.0 %) benchmark(s) to run. Estimated finish 2026-04-19 10:41 (0h 0m from now) **
+// **************************
+// Benchmark: RegressionBenchmark.'GetCurrentAsync per aggregate': Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1) [AggregateCount=200, VersionsPerAggregate=1]
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1.dll --anonymousPipes 163 164 --benchmarkName "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetCurrentAsync(AggregateCount: 200, VersionsPerAggregate: 1)" --job "InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1" --benchmarkId 4 in /home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions/src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/bin/Release/net10.0/Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX512 BITALG+VBMI2+VNNI+VPOPCNTDQ,AVX512 IFMA+VBMI,AVX512 F+BW+CD+DQ+VL,AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1)
+
+OverheadJitting  1: 1 op, 152318.00 ns, 152.3180 us/op
+WorkloadJitting  1: 1 op, 51676004.00 ns, 51.6760 ms/op
+
+OverheadWarmup   1: 1 op, 621.00 ns, 621.0000 ns/op
+OverheadWarmup   2: 1 op, 471.00 ns, 471.0000 ns/op
+OverheadWarmup   3: 1 op, 610.00 ns, 610.0000 ns/op
+OverheadWarmup   4: 1 op, 230.00 ns, 230.0000 ns/op
+OverheadWarmup   5: 1 op, 241.00 ns, 241.0000 ns/op
+OverheadWarmup   6: 1 op, 251.00 ns, 251.0000 ns/op
+OverheadWarmup   7: 1 op, 241.00 ns, 241.0000 ns/op
+
+OverheadActual   1: 1 op, 441.00 ns, 441.0000 ns/op
+OverheadActual   2: 1 op, 260.00 ns, 260.0000 ns/op
+OverheadActual   3: 1 op, 541.00 ns, 541.0000 ns/op
+OverheadActual   4: 1 op, 380.00 ns, 380.0000 ns/op
+OverheadActual   5: 1 op, 371.00 ns, 371.0000 ns/op
+OverheadActual   6: 1 op, 220.00 ns, 220.0000 ns/op
+OverheadActual   7: 1 op, 240.00 ns, 240.0000 ns/op
+OverheadActual   8: 1 op, 230.00 ns, 230.0000 ns/op
+OverheadActual   9: 1 op, 261.00 ns, 261.0000 ns/op
+OverheadActual  10: 1 op, 200.00 ns, 200.0000 ns/op
+OverheadActual  11: 1 op, 201.00 ns, 201.0000 ns/op
+OverheadActual  12: 1 op, 200.00 ns, 200.0000 ns/op
+OverheadActual  13: 1 op, 221.00 ns, 221.0000 ns/op
+OverheadActual  14: 1 op, 220.00 ns, 220.0000 ns/op
+OverheadActual  15: 1 op, 220.00 ns, 220.0000 ns/op
+OverheadActual  16: 1 op, 230.00 ns, 230.0000 ns/op
+OverheadActual  17: 1 op, 220.00 ns, 220.0000 ns/op
+OverheadActual  18: 1 op, 260.00 ns, 260.0000 ns/op
+OverheadActual  19: 1 op, 241.00 ns, 241.0000 ns/op
+OverheadActual  20: 1 op, 240.00 ns, 240.0000 ns/op
+
+WorkloadWarmup   1: 1 op, 36013804.00 ns, 36.0138 ms/op
+
+// BeforeActualRun
+WorkloadActual   1: 1 op, 33263730.00 ns, 33.2637 ms/op
+WorkloadActual   2: 1 op, 33104641.00 ns, 33.1046 ms/op
+WorkloadActual   3: 1 op, 32771862.00 ns, 32.7719 ms/op
+WorkloadActual   4: 1 op, 32681186.00 ns, 32.6812 ms/op
+WorkloadActual   5: 1 op, 32553845.00 ns, 32.5538 ms/op
+
+// AfterActualRun
+WorkloadResult   1: 1 op, 33263495.00 ns, 33.2635 ms/op
+WorkloadResult   2: 1 op, 33104406.00 ns, 33.1044 ms/op
+WorkloadResult   3: 1 op, 32771627.00 ns, 32.7716 ms/op
+WorkloadResult   4: 1 op, 32680951.00 ns, 32.6810 ms/op
+WorkloadResult   5: 1 op, 32553610.00 ns, 32.5536 ms/op
+// GC:  0 0 0 3349816 1
+// Threading:  0 0 1
+
+// AfterAll
+// Benchmark Process 4937 has exited with code 0.
+
+Mean = 32.875 ms, StdErr = 0.133 ms (0.41%), N = 5, StdDev = 0.298 ms
+Min = 32.554 ms, Q1 = 32.681 ms, Median = 32.772 ms, Q3 = 33.104 ms, Max = 33.263 ms
+IQR = 0.423 ms, LowerFence = 32.046 ms, UpperFence = 33.740 ms
+ConfidenceInterval = [31.727 ms; 34.022 ms] (CI 99.9%), Margin = 1.147 ms (3.49% of Mean)
+Skewness = 0.22, Kurtosis = 0.96, MValue = 2
+
+// ** Remained 11 (68.8 %) benchmark(s) to run. Estimated finish 2026-04-19 10:41 (0h 0m from now) **
+// **************************
+// Benchmark: RegressionBenchmark.'GetCurrentAsync per aggregate': .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0, IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1) [AggregateCount=200, VersionsPerAggregate=1]
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1.dll --anonymousPipes 163 164 --benchmarkName "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetCurrentAsync(AggregateCount: 200, VersionsPerAggregate: 1)" --job ".NET 10.0" --benchmarkId 5 in /home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions/src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/bin/Release/net10.0/Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX512 BITALG+VBMI2+VNNI+VPOPCNTDQ,AVX512 IFMA+VBMI,AVX512 F+BW+CD+DQ+VL,AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: .NET 10.0(IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1)
+
+// BeforeActualRun
+WorkloadActual   1: 1 op, 52780191.00 ns, 52.7802 ms/op
+
+// AfterActualRun
+WorkloadResult   1: 1 op, 52780191.00 ns, 52.7802 ms/op
+// GC:  0 0 0 3349816 1
+// Threading:  0 0 1
+
+// AfterAll
+// Benchmark Process 4950 has exited with code 0.
+
+Mean = 52.780 ms, StdErr = 0.000 ms (0.00%), N = 1, StdDev = 0.000 ms
+Min = 52.780 ms, Q1 = 52.780 ms, Median = 52.780 ms, Q3 = 52.780 ms, Max = 52.780 ms
+IQR = 0.000 ms, LowerFence = 52.780 ms, UpperFence = 52.780 ms
+ConfidenceInterval = [NaN ms; NaN ms] (CI 99.9%), Margin = NaN ms (NaN% of Mean)
+Skewness = NaN, Kurtosis = NaN, MValue = 2
+
+// ** Remained 10 (62.5 %) benchmark(s) to run. Estimated finish 2026-04-19 10:41 (0h 0m from now) **
+// **************************
+// Benchmark: RegressionBenchmark.'GetCurrentAsync per aggregate': Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1) [AggregateCount=200, VersionsPerAggregate=10]
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1.dll --anonymousPipes 163 164 --benchmarkName "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetCurrentAsync(AggregateCount: 200, VersionsPerAggregate: 10)" --job "InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1" --benchmarkId 6 in /home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions/src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/bin/Release/net10.0/Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX512 BITALG+VBMI2+VNNI+VPOPCNTDQ,AVX512 IFMA+VBMI,AVX512 F+BW+CD+DQ+VL,AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1)
+
+OverheadJitting  1: 1 op, 153330.00 ns, 153.3300 us/op
+WorkloadJitting  1: 1 op, 27047846.00 ns, 27.0478 ms/op
+
+OverheadWarmup   1: 1 op, 792.00 ns, 792.0000 ns/op
+OverheadWarmup   2: 1 op, 491.00 ns, 491.0000 ns/op
+OverheadWarmup   3: 1 op, 260.00 ns, 260.0000 ns/op
+OverheadWarmup   4: 1 op, 270.00 ns, 270.0000 ns/op
+OverheadWarmup   5: 1 op, 260.00 ns, 260.0000 ns/op
+OverheadWarmup   6: 1 op, 261.00 ns, 261.0000 ns/op
+OverheadWarmup   7: 1 op, 291.00 ns, 291.0000 ns/op
+OverheadWarmup   8: 1 op, 241.00 ns, 241.0000 ns/op
+
+OverheadActual   1: 1 op, 341.00 ns, 341.0000 ns/op
+OverheadActual   2: 1 op, 2334.00 ns, 2.3340 us/op
+OverheadActual   3: 1 op, 2664.00 ns, 2.6640 us/op
+OverheadActual   4: 1 op, 371.00 ns, 371.0000 ns/op
+OverheadActual   5: 1 op, 671.00 ns, 671.0000 ns/op
+OverheadActual   6: 1 op, 281.00 ns, 281.0000 ns/op
+OverheadActual   7: 1 op, 260.00 ns, 260.0000 ns/op
+OverheadActual   8: 1 op, 270.00 ns, 270.0000 ns/op
+OverheadActual   9: 1 op, 240.00 ns, 240.0000 ns/op
+OverheadActual  10: 1 op, 390.00 ns, 390.0000 ns/op
+OverheadActual  11: 1 op, 711.00 ns, 711.0000 ns/op
+OverheadActual  12: 1 op, 260.00 ns, 260.0000 ns/op
+OverheadActual  13: 1 op, 250.00 ns, 250.0000 ns/op
+OverheadActual  14: 1 op, 301.00 ns, 301.0000 ns/op
+OverheadActual  15: 1 op, 2514.00 ns, 2.5140 us/op
+OverheadActual  16: 1 op, 320.00 ns, 320.0000 ns/op
+OverheadActual  17: 1 op, 241.00 ns, 241.0000 ns/op
+OverheadActual  18: 1 op, 2364.00 ns, 2.3640 us/op
+OverheadActual  19: 1 op, 321.00 ns, 321.0000 ns/op
+OverheadActual  20: 1 op, 241.00 ns, 241.0000 ns/op
+
+WorkloadWarmup   1: 1 op, 11616673.00 ns, 11.6167 ms/op
+
+// BeforeActualRun
+WorkloadActual   1: 1 op, 10693958.00 ns, 10.6940 ms/op
+WorkloadActual   2: 1 op, 9448491.00 ns, 9.4485 ms/op
+WorkloadActual   3: 1 op, 9008741.00 ns, 9.0087 ms/op
+WorkloadActual   4: 1 op, 8984765.00 ns, 8.9848 ms/op
+WorkloadActual   5: 1 op, 9220339.00 ns, 9.2203 ms/op
+
+// AfterActualRun
+WorkloadResult   1: 1 op, 9448170.50 ns, 9.4482 ms/op
+WorkloadResult   2: 1 op, 9008420.50 ns, 9.0084 ms/op
+WorkloadResult   3: 1 op, 8984444.50 ns, 8.9844 ms/op
+WorkloadResult   4: 1 op, 9220018.50 ns, 9.2200 ms/op
+// GC:  0 0 0 3225016 1
+// Threading:  0 0 1
+
+// AfterAll
+// Benchmark Process 4962 has exited with code 0.
+
+Mean = 9.165 ms, StdErr = 0.108 ms (1.18%), N = 4, StdDev = 0.216 ms
+Min = 8.984 ms, Q1 = 9.002 ms, Median = 9.114 ms, Q3 = 9.277 ms, Max = 9.448 ms
+IQR = 0.275 ms, LowerFence = 8.590 ms, UpperFence = 9.689 ms
+ConfidenceInterval = [7.768 ms; 10.563 ms] (CI 99.9%), Margin = 1.398 ms (15.25% of Mean)
+Skewness = 0.32, Kurtosis = 0.92, MValue = 2
+
+// ** Remained 9 (56.2 %) benchmark(s) to run. Estimated finish 2026-04-19 10:42 (0h 1m from now) **
+// **************************
+// Benchmark: RegressionBenchmark.'GetCurrentAsync per aggregate': .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0, IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1) [AggregateCount=200, VersionsPerAggregate=10]
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1.dll --anonymousPipes 163 164 --benchmarkName "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetCurrentAsync(AggregateCount: 200, VersionsPerAggregate: 10)" --job ".NET 10.0" --benchmarkId 7 in /home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions/src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/bin/Release/net10.0/Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX512 BITALG+VBMI2+VNNI+VPOPCNTDQ,AVX512 IFMA+VBMI,AVX512 F+BW+CD+DQ+VL,AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: .NET 10.0(IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1)
+
+// BeforeActualRun
+WorkloadActual   1: 1 op, 28109502.00 ns, 28.1095 ms/op
+
+// AfterActualRun
+WorkloadResult   1: 1 op, 28109502.00 ns, 28.1095 ms/op
+// GC:  0 0 0 3225016 1
+// Threading:  0 0 1
+
+// AfterAll
+// Benchmark Process 4988 has exited with code 0.
+
+Mean = 28.110 ms, StdErr = 0.000 ms (0.00%), N = 1, StdDev = 0.000 ms
+Min = 28.110 ms, Q1 = 28.110 ms, Median = 28.110 ms, Q3 = 28.110 ms, Max = 28.110 ms
+IQR = 0.000 ms, LowerFence = 28.110 ms, UpperFence = 28.110 ms
+ConfidenceInterval = [NaN ms; NaN ms] (CI 99.9%), Margin = NaN ms (NaN% of Mean)
+Skewness = NaN, Kurtosis = NaN, MValue = 2
+
+// ** Remained 8 (50.0 %) benchmark(s) to run. Estimated finish 2026-04-19 10:42 (0h 1m from now) **
+// ***** BenchmarkRunner: Finish  *****
+
+// * Export *
+
+// * Detailed results *
+RegressionBenchmark.'GetCurrentAsync per aggregate': Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1) [AggregateCount=50, VersionsPerAggregate=1]
+Runtime = .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4; GC = Concurrent Workstation
+Mean = 8.748 ms, StdErr = 0.550 ms (6.28%), N = 5, StdDev = 1.229 ms
+Min = 7.388 ms, Q1 = 7.641 ms, Median = 8.943 ms, Q3 = 9.469 ms, Max = 10.301 ms
+IQR = 1.829 ms, LowerFence = 4.898 ms, UpperFence = 12.212 ms
+ConfidenceInterval = [4.014 ms; 13.482 ms] (CI 99.9%), Margin = 4.734 ms (54.12% of Mean)
+Skewness = 0.03, Kurtosis = 0.96, MValue = 2
+-------------------- Histogram --------------------
+[6.444 ms ;  8.678 ms) | @@
+[8.678 ms ; 10.566 ms) | @@@
+---------------------------------------------------
+
+RegressionBenchmark.'GetCurrentAsync per aggregate': .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0, IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1) [AggregateCount=50, VersionsPerAggregate=1]
+Runtime = .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4; GC = Concurrent Workstation
+Mean = 22.209 ms, StdErr = 0.000 ms (0.00%), N = 1, StdDev = 0.000 ms
+Min = 22.209 ms, Q1 = 22.209 ms, Median = 22.209 ms, Q3 = 22.209 ms, Max = 22.209 ms
+IQR = 0.000 ms, LowerFence = 22.209 ms, UpperFence = 22.209 ms
+ConfidenceInterval = [NaN ms; NaN ms] (CI 99.9%), Margin = NaN ms (NaN% of Mean)
+Skewness = NaN, Kurtosis = NaN, MValue = 2
+-------------------- Histogram --------------------
+[22.209 ms ; 22.209 ms) | @
+---------------------------------------------------
+
+RegressionBenchmark.'GetCurrentAsync per aggregate': Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1) [AggregateCount=50, VersionsPerAggregate=10]
+Runtime = .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4; GC = Concurrent Workstation
+Mean = 5.838 ms, StdErr = 0.943 ms (16.16%), N = 5, StdDev = 2.110 ms
+Min = 3.137 ms, Q1 = 4.956 ms, Median = 5.651 ms, Q3 = 6.586 ms, Max = 8.860 ms
+IQR = 1.630 ms, LowerFence = 2.511 ms, UpperFence = 9.031 ms
+ConfidenceInterval = [-2.286 ms; 13.961 ms] (CI 99.9%), Margin = 8.123 ms (139.15% of Mean)
+Skewness = 0.16, Kurtosis = 1.39, MValue = 2
+-------------------- Histogram --------------------
+[1.517 ms ;  4.151 ms) | @
+[4.151 ms ;  7.390 ms) | @@@
+[7.390 ms ; 10.479 ms) | @
+---------------------------------------------------
+
+RegressionBenchmark.'GetCurrentAsync per aggregate': .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0, IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1) [AggregateCount=50, VersionsPerAggregate=10]
+Runtime = .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4; GC = Concurrent Workstation
+Mean = 24.301 ms, StdErr = 0.000 ms (0.00%), N = 1, StdDev = 0.000 ms
+Min = 24.301 ms, Q1 = 24.301 ms, Median = 24.301 ms, Q3 = 24.301 ms, Max = 24.301 ms
+IQR = 0.000 ms, LowerFence = 24.301 ms, UpperFence = 24.301 ms
+ConfidenceInterval = [NaN ms; NaN ms] (CI 99.9%), Margin = NaN ms (NaN% of Mean)
+Skewness = NaN, Kurtosis = NaN, MValue = 2
+-------------------- Histogram --------------------
+[24.301 ms ; 24.301 ms) | @
+---------------------------------------------------
+
+RegressionBenchmark.'GetCurrentAsync per aggregate': Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1) [AggregateCount=200, VersionsPerAggregate=1]
+Runtime = .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4; GC = Concurrent Workstation
+Mean = 32.875 ms, StdErr = 0.133 ms (0.41%), N = 5, StdDev = 0.298 ms
+Min = 32.554 ms, Q1 = 32.681 ms, Median = 32.772 ms, Q3 = 33.104 ms, Max = 33.263 ms
+IQR = 0.423 ms, LowerFence = 32.046 ms, UpperFence = 33.740 ms
+ConfidenceInterval = [31.727 ms; 34.022 ms] (CI 99.9%), Margin = 1.147 ms (3.49% of Mean)
+Skewness = 0.22, Kurtosis = 0.96, MValue = 2
+-------------------- Histogram --------------------
+[32.325 ms ; 33.492 ms) | @@@@@
+---------------------------------------------------
+
+RegressionBenchmark.'GetCurrentAsync per aggregate': .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0, IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1) [AggregateCount=200, VersionsPerAggregate=1]
+Runtime = .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4; GC = Concurrent Workstation
+Mean = 52.780 ms, StdErr = 0.000 ms (0.00%), N = 1, StdDev = 0.000 ms
+Min = 52.780 ms, Q1 = 52.780 ms, Median = 52.780 ms, Q3 = 52.780 ms, Max = 52.780 ms
+IQR = 0.000 ms, LowerFence = 52.780 ms, UpperFence = 52.780 ms
+ConfidenceInterval = [NaN ms; NaN ms] (CI 99.9%), Margin = NaN ms (NaN% of Mean)
+Skewness = NaN, Kurtosis = NaN, MValue = 2
+-------------------- Histogram --------------------
+[52.780 ms ; 52.780 ms) | @
+---------------------------------------------------
+
+RegressionBenchmark.'GetCurrentAsync per aggregate': Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1) [AggregateCount=200, VersionsPerAggregate=10]
+Runtime = .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4; GC = Concurrent Workstation
+Mean = 9.165 ms, StdErr = 0.108 ms (1.18%), N = 4, StdDev = 0.216 ms
+Min = 8.984 ms, Q1 = 9.002 ms, Median = 9.114 ms, Q3 = 9.277 ms, Max = 9.448 ms
+IQR = 0.275 ms, LowerFence = 8.590 ms, UpperFence = 9.689 ms
+ConfidenceInterval = [7.768 ms; 10.563 ms] (CI 99.9%), Margin = 1.398 ms (15.25% of Mean)
+Skewness = 0.32, Kurtosis = 0.92, MValue = 2
+-------------------- Histogram --------------------
+[8.923 ms ; 9.281 ms) | @@@
+[9.281 ms ; 9.627 ms) | @
+---------------------------------------------------
+
+RegressionBenchmark.'GetCurrentAsync per aggregate': .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0, IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1) [AggregateCount=200, VersionsPerAggregate=10]
+Runtime = .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4; GC = Concurrent Workstation
+Mean = 28.110 ms, StdErr = 0.000 ms (0.00%), N = 1, StdDev = 0.000 ms
+Min = 28.110 ms, Q1 = 28.110 ms, Median = 28.110 ms, Q3 = 28.110 ms, Max = 28.110 ms
+IQR = 0.000 ms, LowerFence = 28.110 ms, UpperFence = 28.110 ms
+ConfidenceInterval = [NaN ms; NaN ms] (CI 99.9%), Margin = NaN ms (NaN% of Mean)
+Skewness = NaN, Kurtosis = NaN, MValue = 2
+-------------------- Histogram --------------------
+[28.110 ms ; 28.110 ms) | @
+---------------------------------------------------
+
+// * Summary *
+
+BenchmarkDotNet v0.15.8, Linux Ubuntu 24.04.4 LTS (Noble Numbat)
+AMD EPYC 9V74 2.60GHz, 1 CPU, 4 logical and 2 physical cores
+.NET SDK 10.0.201
+  [Host]     : .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4
+  Job-PSZTYW : .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4
+  .NET 10.0  : .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4
+
+Runtime=.NET 10.0  UnrollFactor=1  WarmupCount=1  
+
+| Method                          | Job        | Toolchain | InvocationCount | IterationCount | LaunchCount | RunStrategy | AggregateCount | VersionsPerAggregate | Mean      | Error    | StdDev    | Min       | Max       | Median    | Allocated  |
+|-------------------------------- |----------- |---------- |---------------- |--------------- |------------ |------------ |--------------- |--------------------- |----------:|---------:|----------:|----------:|----------:|----------:|-----------:|
+| 'GetCurrentAsync per aggregate' | Job-PSZTYW | Default   | 1               | 5              | Default     | Throughput  | 50             | 1                    |  8.748 ms | 4.734 ms | 1.2294 ms |  7.388 ms | 10.301 ms |  8.943 ms |  832.56 KB |
+| 'GetCurrentAsync per aggregate' | .NET 10.0  | net10.0   | Default         | 1              | 1           | ColdStart   | 50             | 1                    | 22.209 ms |       NA | 0.0000 ms | 22.209 ms | 22.209 ms | 22.209 ms |  825.68 KB |
+| 'GetCurrentAsync per aggregate' | Job-PSZTYW | Default   | 1               | 5              | Default     | Throughput  | 50             | 10                   |  5.838 ms | 8.123 ms | 2.1096 ms |  3.137 ms |  8.860 ms |  5.651 ms |  806.39 KB |
+| 'GetCurrentAsync per aggregate' | .NET 10.0  | net10.0   | Default         | 1              | 1           | ColdStart   | 50             | 10                   | 24.301 ms |       NA | 0.0000 ms | 24.301 ms | 24.301 ms | 24.301 ms |  826.07 KB |
+| 'GetCurrentAsync per aggregate' | Job-PSZTYW | Default   | 1               | 5              | Default     | Throughput  | 200            | 1                    | 32.875 ms | 1.147 ms | 0.2980 ms | 32.554 ms | 33.263 ms | 32.772 ms |  3271.3 KB |
+| 'GetCurrentAsync per aggregate' | .NET 10.0  | net10.0   | Default         | 1              | 1           | ColdStart   | 200            | 1                    | 52.780 ms |       NA | 0.0000 ms | 52.780 ms | 52.780 ms | 52.780 ms |  3271.3 KB |
+| 'GetCurrentAsync per aggregate' | Job-PSZTYW | Default   | 1               | 5              | Default     | Throughput  | 200            | 10                   |  9.165 ms | 1.398 ms | 0.2163 ms |  8.984 ms |  9.448 ms |  9.114 ms | 3149.43 KB |
+| 'GetCurrentAsync per aggregate' | .NET 10.0  | net10.0   | Default         | 1              | 1           | ColdStart   | 200            | 10                   | 28.110 ms |       NA | 0.0000 ms | 28.110 ms | 28.110 ms | 28.110 ms | 3149.43 KB |
+
+// * Legends *
+  AggregateCount       : Value of the 'AggregateCount' parameter
+  VersionsPerAggregate : Value of the 'VersionsPerAggregate' parameter
+  Mean                 : Arithmetic mean of all measurements
+  Error                : Half of 99.9% confidence interval
+  StdDev               : Standard deviation of all measurements
+  Min                  : Minimum
+  Max                  : Maximum
+  Median               : Value separating the higher half of all measurements (50th percentile)
+  Allocated            : Allocated memory per single operation (managed only, inclusive, 1KB = 1024B)
+  1 ms                 : 1 Millisecond (0.001 sec)
+
+// * Diagnostic Output - MemoryDiagnoser *
+
+
+// ***** BenchmarkRunner: End *****
+Run time: 00:01:01 (61.55 sec), executed benchmarks: 8
+
+// Found 8 benchmarks:
+//   VersionedVsNonVersionedBenchmark.'Versioned: SaveAsync (initial)': Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1) [AggregateCount=50, VersionsPerAggregate=1]
+//   VersionedVsNonVersionedBenchmark.'Versioned: SaveAsync (initial)': .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0, IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1) [AggregateCount=50, VersionsPerAggregate=1]
+//   VersionedVsNonVersionedBenchmark.'Versioned: SaveAsync (initial)': Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1) [AggregateCount=50, VersionsPerAggregate=10]
+//   VersionedVsNonVersionedBenchmark.'Versioned: SaveAsync (initial)': .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0, IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1) [AggregateCount=50, VersionsPerAggregate=10]
+//   VersionedVsNonVersionedBenchmark.'Versioned: SaveAsync (initial)': Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1) [AggregateCount=200, VersionsPerAggregate=1]
+//   VersionedVsNonVersionedBenchmark.'Versioned: SaveAsync (initial)': .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0, IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1) [AggregateCount=200, VersionsPerAggregate=1]
+//   VersionedVsNonVersionedBenchmark.'Versioned: SaveAsync (initial)': Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1) [AggregateCount=200, VersionsPerAggregate=10]
+//   VersionedVsNonVersionedBenchmark.'Versioned: SaveAsync (initial)': .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0, IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1) [AggregateCount=200, VersionsPerAggregate=10]
+
+// **************************
+// Benchmark: VersionedVsNonVersionedBenchmark.'Versioned: SaveAsync (initial)': Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1) [AggregateCount=50, VersionsPerAggregate=1]
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1.dll --anonymousPipes 169 170 --benchmarkName "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.VersionedVsNonVersionedBenchmark.Insert_Versioned(AggregateCount: 50, VersionsPerAggregate: 1)" --job "InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1" --benchmarkId 8 in /home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions/src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/bin/Release/net10.0/Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX512 BITALG+VBMI2+VNNI+VPOPCNTDQ,AVX512 IFMA+VBMI,AVX512 F+BW+CD+DQ+VL,AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1)
+
+OverheadJitting  1: 1 op, 151107.00 ns, 151.1070 us/op
+WorkloadJitting  1: 1 op, 272016616.00 ns, 272.0166 ms/op
+
+OverheadWarmup   1: 1 op, 390.00 ns, 390.0000 ns/op
+OverheadWarmup   2: 1 op, 560.00 ns, 560.0000 ns/op
+OverheadWarmup   3: 1 op, 280.00 ns, 280.0000 ns/op
+OverheadWarmup   4: 1 op, 171.00 ns, 171.0000 ns/op
+OverheadWarmup   5: 1 op, 180.00 ns, 180.0000 ns/op
+OverheadWarmup   6: 1 op, 160.00 ns, 160.0000 ns/op
+
+OverheadActual   1: 1 op, 580.00 ns, 580.0000 ns/op
+OverheadActual   2: 1 op, 390.00 ns, 390.0000 ns/op
+OverheadActual   3: 1 op, 411.00 ns, 411.0000 ns/op
+OverheadActual   4: 1 op, 391.00 ns, 391.0000 ns/op
+OverheadActual   5: 1 op, 400.00 ns, 400.0000 ns/op
+OverheadActual   6: 1 op, 291.00 ns, 291.0000 ns/op
+OverheadActual   7: 1 op, 280.00 ns, 280.0000 ns/op
+OverheadActual   8: 1 op, 280.00 ns, 280.0000 ns/op
+OverheadActual   9: 1 op, 411.00 ns, 411.0000 ns/op
+OverheadActual  10: 1 op, 181.00 ns, 181.0000 ns/op
+OverheadActual  11: 1 op, 150.00 ns, 150.0000 ns/op
+OverheadActual  12: 1 op, 180.00 ns, 180.0000 ns/op
+OverheadActual  13: 1 op, 471.00 ns, 471.0000 ns/op
+OverheadActual  14: 1 op, 270.00 ns, 270.0000 ns/op
+OverheadActual  15: 1 op, 290.00 ns, 290.0000 ns/op
+OverheadActual  16: 1 op, 170.00 ns, 170.0000 ns/op
+OverheadActual  17: 1 op, 221.00 ns, 221.0000 ns/op
+OverheadActual  18: 1 op, 311.00 ns, 311.0000 ns/op
+OverheadActual  19: 1 op, 170.00 ns, 170.0000 ns/op
+OverheadActual  20: 1 op, 180.00 ns, 180.0000 ns/op
+
+WorkloadWarmup   1: 1 op, 58473529.00 ns, 58.4735 ms/op
+
+// BeforeActualRun
+WorkloadActual   1: 1 op, 58190574.00 ns, 58.1906 ms/op
+WorkloadActual   2: 1 op, 54933068.00 ns, 54.9331 ms/op
+WorkloadActual   3: 1 op, 84040403.00 ns, 84.0404 ms/op
+WorkloadActual   4: 1 op, 119701027.00 ns, 119.7010 ms/op
+WorkloadActual   5: 1 op, 117345285.00 ns, 117.3453 ms/op
+
+// AfterActualRun
+WorkloadResult   1: 1 op, 58190289.00 ns, 58.1903 ms/op
+WorkloadResult   2: 1 op, 54932783.00 ns, 54.9328 ms/op
+WorkloadResult   3: 1 op, 84040118.00 ns, 84.0401 ms/op
+WorkloadResult   4: 1 op, 119700742.00 ns, 119.7007 ms/op
+WorkloadResult   5: 1 op, 117345000.00 ns, 117.3450 ms/op
+// GC:  0 0 0 7150512 1
+// Threading:  0 0 1
+
+// AfterAll
+// Benchmark Process 5007 has exited with code 0.
+
+Mean = 86.842 ms, StdErr = 13.887 ms (15.99%), N = 5, StdDev = 31.053 ms
+Min = 54.933 ms, Q1 = 58.190 ms, Median = 84.040 ms, Q3 = 117.345 ms, Max = 119.701 ms
+IQR = 59.155 ms, LowerFence = -30.542 ms, UpperFence = 206.077 ms
+ConfidenceInterval = [-32.731 ms; 206.415 ms] (CI 99.9%), Margin = 119.573 ms (137.69% of Mean)
+Skewness = 0.05, Kurtosis = 0.8, MValue = 2
+
+// ** Remained 7 (43.8 %) benchmark(s) to run. Estimated finish 2026-04-19 10:42 (0h 0m from now) **
+// **************************
+// Benchmark: VersionedVsNonVersionedBenchmark.'Versioned: SaveAsync (initial)': .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0, IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1) [AggregateCount=50, VersionsPerAggregate=1]
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1.dll --anonymousPipes 169 170 --benchmarkName "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.VersionedVsNonVersionedBenchmark.Insert_Versioned(AggregateCount: 50, VersionsPerAggregate: 1)" --job ".NET 10.0" --benchmarkId 9 in /home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions/src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/bin/Release/net10.0/Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX512 BITALG+VBMI2+VNNI+VPOPCNTDQ,AVX512 IFMA+VBMI,AVX512 F+BW+CD+DQ+VL,AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: .NET 10.0(IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1)
+
+// BeforeActualRun
+WorkloadActual   1: 1 op, 275815578.00 ns, 275.8156 ms/op
+
+// AfterActualRun
+WorkloadResult   1: 1 op, 275815578.00 ns, 275.8156 ms/op
+// GC:  0 0 0 7156136 1
+// Threading:  0 0 1
+
+// AfterAll
+// Benchmark Process 5019 has exited with code 0.
+
+Mean = 275.816 ms, StdErr = 0.000 ms (0.00%), N = 1, StdDev = 0.000 ms
+Min = 275.816 ms, Q1 = 275.816 ms, Median = 275.816 ms, Q3 = 275.816 ms, Max = 275.816 ms
+IQR = 0.000 ms, LowerFence = 275.816 ms, UpperFence = 275.816 ms
+ConfidenceInterval = [NaN ms; NaN ms] (CI 99.9%), Margin = NaN ms (NaN% of Mean)
+Skewness = NaN, Kurtosis = NaN, MValue = 2
+
+// ** Remained 6 (37.5 %) benchmark(s) to run. Estimated finish 2026-04-19 10:42 (0h 0m from now) **
+// **************************
+// Benchmark: VersionedVsNonVersionedBenchmark.'Versioned: SaveAsync (initial)': Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1) [AggregateCount=50, VersionsPerAggregate=10]
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1.dll --anonymousPipes 169 170 --benchmarkName "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.VersionedVsNonVersionedBenchmark.Insert_Versioned(AggregateCount: 50, VersionsPerAggregate: 10)" --job "InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1" --benchmarkId 10 in /home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions/src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/bin/Release/net10.0/Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX512 BITALG+VBMI2+VNNI+VPOPCNTDQ,AVX512 IFMA+VBMI,AVX512 F+BW+CD+DQ+VL,AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1)
+
+OverheadJitting  1: 1 op, 149954.00 ns, 149.9540 us/op
+WorkloadJitting  1: 1 op, 273153997.00 ns, 273.1540 ms/op
+
+OverheadWarmup   1: 1 op, 461.00 ns, 461.0000 ns/op
+OverheadWarmup   2: 1 op, 240.00 ns, 240.0000 ns/op
+OverheadWarmup   3: 1 op, 220.00 ns, 220.0000 ns/op
+OverheadWarmup   4: 1 op, 191.00 ns, 191.0000 ns/op
+OverheadWarmup   5: 1 op, 190.00 ns, 190.0000 ns/op
+OverheadWarmup   6: 1 op, 220.00 ns, 220.0000 ns/op
+OverheadWarmup   7: 1 op, 190.00 ns, 190.0000 ns/op
+OverheadWarmup   8: 1 op, 170.00 ns, 170.0000 ns/op
+OverheadWarmup   9: 1 op, 2363.00 ns, 2.3630 us/op
+OverheadWarmup  10: 1 op, 501.00 ns, 501.0000 ns/op
+
+OverheadActual   1: 1 op, 651.00 ns, 651.0000 ns/op
+OverheadActual   2: 1 op, 451.00 ns, 451.0000 ns/op
+OverheadActual   3: 1 op, 2795.00 ns, 2.7950 us/op
+OverheadActual   4: 1 op, 311.00 ns, 311.0000 ns/op
+OverheadActual   5: 1 op, 231.00 ns, 231.0000 ns/op
+OverheadActual   6: 1 op, 180.00 ns, 180.0000 ns/op
+OverheadActual   7: 1 op, 390.00 ns, 390.0000 ns/op
+OverheadActual   8: 1 op, 200.00 ns, 200.0000 ns/op
+OverheadActual   9: 1 op, 200.00 ns, 200.0000 ns/op
+OverheadActual  10: 1 op, 180.00 ns, 180.0000 ns/op
+OverheadActual  11: 1 op, 210.00 ns, 210.0000 ns/op
+OverheadActual  12: 1 op, 190.00 ns, 190.0000 ns/op
+OverheadActual  13: 1 op, 200.00 ns, 200.0000 ns/op
+OverheadActual  14: 1 op, 191.00 ns, 191.0000 ns/op
+OverheadActual  15: 1 op, 220.00 ns, 220.0000 ns/op
+OverheadActual  16: 1 op, 421.00 ns, 421.0000 ns/op
+OverheadActual  17: 1 op, 431.00 ns, 431.0000 ns/op
+OverheadActual  18: 1 op, 200.00 ns, 200.0000 ns/op
+OverheadActual  19: 1 op, 201.00 ns, 201.0000 ns/op
+OverheadActual  20: 1 op, 200.00 ns, 200.0000 ns/op
+
+WorkloadWarmup   1: 1 op, 58607941.00 ns, 58.6079 ms/op
+
+// BeforeActualRun
+WorkloadActual   1: 1 op, 58140469.00 ns, 58.1405 ms/op
+WorkloadActual   2: 1 op, 54899798.00 ns, 54.8998 ms/op
+WorkloadActual   3: 1 op, 111548841.00 ns, 111.5488 ms/op
+WorkloadActual   4: 1 op, 119017712.00 ns, 119.0177 ms/op
+WorkloadActual   5: 1 op, 119184172.00 ns, 119.1842 ms/op
+
+// AfterActualRun
+WorkloadResult   1: 1 op, 58140263.50 ns, 58.1403 ms/op
+WorkloadResult   2: 1 op, 54899592.50 ns, 54.8996 ms/op
+WorkloadResult   3: 1 op, 111548635.50 ns, 111.5486 ms/op
+WorkloadResult   4: 1 op, 119017506.50 ns, 119.0175 ms/op
+WorkloadResult   5: 1 op, 119183966.50 ns, 119.1840 ms/op
+// GC:  0 0 0 7150512 1
+// Threading:  0 0 1
+
+// AfterAll
+// Benchmark Process 5031 has exited with code 0.
+
+Mean = 92.558 ms, StdErr = 14.786 ms (15.97%), N = 5, StdDev = 33.062 ms
+Min = 54.900 ms, Q1 = 58.140 ms, Median = 111.549 ms, Q3 = 119.018 ms, Max = 119.184 ms
+IQR = 60.877 ms, LowerFence = -33.176 ms, UpperFence = 210.333 ms
+ConfidenceInterval = [-34.753 ms; 219.869 ms] (CI 99.9%), Margin = 127.311 ms (137.55% of Mean)
+Skewness = -0.28, Kurtosis = 0.76, MValue = 2
+
+// ** Remained 5 (31.2 %) benchmark(s) to run. Estimated finish 2026-04-19 10:42 (0h 0m from now) **
+// **************************
+// Benchmark: VersionedVsNonVersionedBenchmark.'Versioned: SaveAsync (initial)': .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0, IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1) [AggregateCount=50, VersionsPerAggregate=10]
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1.dll --anonymousPipes 169 170 --benchmarkName "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.VersionedVsNonVersionedBenchmark.Insert_Versioned(AggregateCount: 50, VersionsPerAggregate: 10)" --job ".NET 10.0" --benchmarkId 11 in /home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions/src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/bin/Release/net10.0/Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX512 BITALG+VBMI2+VNNI+VPOPCNTDQ,AVX512 IFMA+VBMI,AVX512 F+BW+CD+DQ+VL,AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: .NET 10.0(IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1)
+
+// BeforeActualRun
+WorkloadActual   1: 1 op, 275721347.00 ns, 275.7213 ms/op
+
+// AfterActualRun
+WorkloadResult   1: 1 op, 275721347.00 ns, 275.7213 ms/op
+// GC:  0 0 0 7172936 1
+// Threading:  0 0 1
+
+// AfterAll
+// Benchmark Process 5043 has exited with code 0.
+
+Mean = 275.721 ms, StdErr = 0.000 ms (0.00%), N = 1, StdDev = 0.000 ms
+Min = 275.721 ms, Q1 = 275.721 ms, Median = 275.721 ms, Q3 = 275.721 ms, Max = 275.721 ms
+IQR = 0.000 ms, LowerFence = 275.721 ms, UpperFence = 275.721 ms
+ConfidenceInterval = [NaN ms; NaN ms] (CI 99.9%), Margin = NaN ms (NaN% of Mean)
+Skewness = NaN, Kurtosis = NaN, MValue = 2
+
+// ** Remained 4 (25.0 %) benchmark(s) to run. Estimated finish 2026-04-19 10:41 (0h 0m from now) **
+// **************************
+// Benchmark: VersionedVsNonVersionedBenchmark.'Versioned: SaveAsync (initial)': Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1) [AggregateCount=200, VersionsPerAggregate=1]
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1.dll --anonymousPipes 169 170 --benchmarkName "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.VersionedVsNonVersionedBenchmark.Insert_Versioned(AggregateCount: 200, VersionsPerAggregate: 1)" --job "InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1" --benchmarkId 12 in /home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions/src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/bin/Release/net10.0/Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX512 BITALG+VBMI2+VNNI+VPOPCNTDQ,AVX512 IFMA+VBMI,AVX512 F+BW+CD+DQ+VL,AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1)
+
+OverheadJitting  1: 1 op, 163365.00 ns, 163.3650 us/op
+WorkloadJitting  1: 1 op, 1260821057.00 ns, 1.2608 s/op
+
+OverheadWarmup   1: 1 op, 882.00 ns, 882.0000 ns/op
+OverheadWarmup   2: 1 op, 430.00 ns, 430.0000 ns/op
+OverheadWarmup   3: 1 op, 411.00 ns, 411.0000 ns/op
+OverheadWarmup   4: 1 op, 610.00 ns, 610.0000 ns/op
+OverheadWarmup   5: 1 op, 701.00 ns, 701.0000 ns/op
+OverheadWarmup   6: 1 op, 500.00 ns, 500.0000 ns/op
+OverheadWarmup   7: 1 op, 590.00 ns, 590.0000 ns/op
+OverheadWarmup   8: 1 op, 501.00 ns, 501.0000 ns/op
+
+OverheadActual   1: 1 op, 631.00 ns, 631.0000 ns/op
+OverheadActual   2: 1 op, 781.00 ns, 781.0000 ns/op
+OverheadActual   3: 1 op, 781.00 ns, 781.0000 ns/op
+OverheadActual   4: 1 op, 611.00 ns, 611.0000 ns/op
+OverheadActual   5: 1 op, 591.00 ns, 591.0000 ns/op
+OverheadActual   6: 1 op, 421.00 ns, 421.0000 ns/op
+OverheadActual   7: 1 op, 310.00 ns, 310.0000 ns/op
+OverheadActual   8: 1 op, 420.00 ns, 420.0000 ns/op
+OverheadActual   9: 1 op, 320.00 ns, 320.0000 ns/op
+OverheadActual  10: 1 op, 351.00 ns, 351.0000 ns/op
+OverheadActual  11: 1 op, 250.00 ns, 250.0000 ns/op
+OverheadActual  12: 1 op, 301.00 ns, 301.0000 ns/op
+OverheadActual  13: 1 op, 391.00 ns, 391.0000 ns/op
+OverheadActual  14: 1 op, 491.00 ns, 491.0000 ns/op
+OverheadActual  15: 1 op, 411.00 ns, 411.0000 ns/op
+OverheadActual  16: 1 op, 561.00 ns, 561.0000 ns/op
+OverheadActual  17: 1 op, 310.00 ns, 310.0000 ns/op
+OverheadActual  18: 1 op, 340.00 ns, 340.0000 ns/op
+OverheadActual  19: 1 op, 391.00 ns, 391.0000 ns/op
+OverheadActual  20: 1 op, 311.00 ns, 311.0000 ns/op
+
+WorkloadWarmup   1: 1 op, 237347253.00 ns, 237.3473 ms/op
+
+// BeforeActualRun
+WorkloadActual   1: 1 op, 189322175.00 ns, 189.3222 ms/op
+WorkloadActual   2: 1 op, 185888185.00 ns, 185.8882 ms/op
+WorkloadActual   3: 1 op, 184309797.00 ns, 184.3098 ms/op
+WorkloadActual   4: 1 op, 183596548.00 ns, 183.5965 ms/op
+WorkloadActual   5: 1 op, 183300334.00 ns, 183.3003 ms/op
+
+// AfterActualRun
+WorkloadResult   1: 1 op, 189321774.00 ns, 189.3218 ms/op
+WorkloadResult   2: 1 op, 185887784.00 ns, 185.8878 ms/op
+WorkloadResult   3: 1 op, 184309396.00 ns, 184.3094 ms/op
+WorkloadResult   4: 1 op, 183596147.00 ns, 183.5961 ms/op
+WorkloadResult   5: 1 op, 183299933.00 ns, 183.2999 ms/op
+// GC:  4 1 0 76726200 1
+// Threading:  0 0 1
+
+// AfterAll
+// Benchmark Process 5058 has exited with code 0.
+
+Mean = 185.283 ms, StdErr = 1.105 ms (0.60%), N = 5, StdDev = 2.470 ms
+Min = 183.300 ms, Q1 = 183.596 ms, Median = 184.309 ms, Q3 = 185.888 ms, Max = 189.322 ms
+IQR = 2.292 ms, LowerFence = 180.159 ms, UpperFence = 189.325 ms
+ConfidenceInterval = [175.772 ms; 194.794 ms] (CI 99.9%), Margin = 9.511 ms (5.13% of Mean)
+Skewness = 0.7, Kurtosis = 1.56, MValue = 2
+
+// ** Remained 3 (18.8 %) benchmark(s) to run. Estimated finish 2026-04-19 10:41 (0h 0m from now) **
+// **************************
+// Benchmark: VersionedVsNonVersionedBenchmark.'Versioned: SaveAsync (initial)': .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0, IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1) [AggregateCount=200, VersionsPerAggregate=1]
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1.dll --anonymousPipes 169 170 --benchmarkName "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.VersionedVsNonVersionedBenchmark.Insert_Versioned(AggregateCount: 200, VersionsPerAggregate: 1)" --job ".NET 10.0" --benchmarkId 13 in /home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions/src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/bin/Release/net10.0/Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX512 BITALG+VBMI2+VNNI+VPOPCNTDQ,AVX512 IFMA+VBMI,AVX512 F+BW+CD+DQ+VL,AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: .NET 10.0(IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1)
+
+// BeforeActualRun
+WorkloadActual   1: 1 op, 878001595.00 ns, 878.0016 ms/op
+
+// AfterActualRun
+WorkloadResult   1: 1 op, 878001595.00 ns, 878.0016 ms/op
+// GC:  4 1 0 76777904 1
+// Threading:  0 0 1
+
+// AfterAll
+// Benchmark Process 5070 has exited with code 0.
+
+Mean = 878.002 ms, StdErr = 0.000 ms (0.00%), N = 1, StdDev = 0.000 ms
+Min = 878.002 ms, Q1 = 878.002 ms, Median = 878.002 ms, Q3 = 878.002 ms, Max = 878.002 ms
+IQR = 0.000 ms, LowerFence = 878.002 ms, UpperFence = 878.002 ms
+ConfidenceInterval = [NaN ms; NaN ms] (CI 99.9%), Margin = NaN ms (NaN% of Mean)
+Skewness = NaN, Kurtosis = NaN, MValue = 2
+
+// ** Remained 2 (12.5 %) benchmark(s) to run. Estimated finish 2026-04-19 10:41 (0h 0m from now) **
+// **************************
+// Benchmark: VersionedVsNonVersionedBenchmark.'Versioned: SaveAsync (initial)': Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1) [AggregateCount=200, VersionsPerAggregate=10]
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1.dll --anonymousPipes 169 170 --benchmarkName "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.VersionedVsNonVersionedBenchmark.Insert_Versioned(AggregateCount: 200, VersionsPerAggregate: 10)" --job "InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1" --benchmarkId 14 in /home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions/src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/bin/Release/net10.0/Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX512 BITALG+VBMI2+VNNI+VPOPCNTDQ,AVX512 IFMA+VBMI,AVX512 F+BW+CD+DQ+VL,AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1)
+
+OverheadJitting  1: 1 op, 154001.00 ns, 154.0010 us/op
+WorkloadJitting  1: 1 op, 931754564.00 ns, 931.7546 ms/op
+
+OverheadWarmup   1: 1 op, 1242.00 ns, 1.2420 us/op
+OverheadWarmup   2: 1 op, 651.00 ns, 651.0000 ns/op
+OverheadWarmup   3: 1 op, 561.00 ns, 561.0000 ns/op
+OverheadWarmup   4: 1 op, 691.00 ns, 691.0000 ns/op
+OverheadWarmup   5: 1 op, 380.00 ns, 380.0000 ns/op
+OverheadWarmup   6: 1 op, 120.00 ns, 120.0000 ns/op
+OverheadWarmup   7: 1 op, 470.00 ns, 470.0000 ns/op
+OverheadWarmup   8: 1 op, 391.00 ns, 391.0000 ns/op
+
+OverheadActual   1: 1 op, 621.00 ns, 621.0000 ns/op
+OverheadActual   2: 1 op, 871.00 ns, 871.0000 ns/op
+OverheadActual   3: 1 op, 841.00 ns, 841.0000 ns/op
+OverheadActual   4: 1 op, 712.00 ns, 712.0000 ns/op
+OverheadActual   5: 1 op, 882.00 ns, 882.0000 ns/op
+OverheadActual   6: 1 op, 581.00 ns, 581.0000 ns/op
+OverheadActual   7: 1 op, 571.00 ns, 571.0000 ns/op
+OverheadActual   8: 1 op, 601.00 ns, 601.0000 ns/op
+OverheadActual   9: 1 op, 290.00 ns, 290.0000 ns/op
+OverheadActual  10: 1 op, 221.00 ns, 221.0000 ns/op
+OverheadActual  11: 1 op, 331.00 ns, 331.0000 ns/op
+OverheadActual  12: 1 op, 180.00 ns, 180.0000 ns/op
+OverheadActual  13: 1 op, 230.00 ns, 230.0000 ns/op
+OverheadActual  14: 1 op, 170.00 ns, 170.0000 ns/op
+OverheadActual  15: 1 op, 340.00 ns, 340.0000 ns/op
+OverheadActual  16: 1 op, 240.00 ns, 240.0000 ns/op
+OverheadActual  17: 1 op, 471.00 ns, 471.0000 ns/op
+OverheadActual  18: 1 op, 381.00 ns, 381.0000 ns/op
+OverheadActual  19: 1 op, 231.00 ns, 231.0000 ns/op
+OverheadActual  20: 1 op, 231.00 ns, 231.0000 ns/op
+
+WorkloadWarmup   1: 1 op, 337239631.00 ns, 337.2396 ms/op
+
+// BeforeActualRun
+WorkloadActual   1: 1 op, 295869234.00 ns, 295.8692 ms/op
+WorkloadActual   2: 1 op, 292753851.00 ns, 292.7539 ms/op
+WorkloadActual   3: 1 op, 290876647.00 ns, 290.8766 ms/op
+WorkloadActual   4: 1 op, 291070660.00 ns, 291.0707 ms/op
+WorkloadActual   5: 1 op, 292068903.00 ns, 292.0689 ms/op
+
+// AfterActualRun
+WorkloadResult   1: 1 op, 292753490.50 ns, 292.7535 ms/op
+WorkloadResult   2: 1 op, 290876286.50 ns, 290.8763 ms/op
+WorkloadResult   3: 1 op, 291070299.50 ns, 291.0703 ms/op
+WorkloadResult   4: 1 op, 292068542.50 ns, 292.0685 ms/op
+// GC:  4 1 0 76773080 1
+// Threading:  0 0 1
+
+// AfterAll
+// Benchmark Process 5082 has exited with code 0.
+
+Mean = 291.692 ms, StdErr = 0.440 ms (0.15%), N = 4, StdDev = 0.879 ms
+Min = 290.876 ms, Q1 = 291.022 ms, Median = 291.569 ms, Q3 = 292.240 ms, Max = 292.753 ms
+IQR = 1.218 ms, LowerFence = 289.195 ms, UpperFence = 294.067 ms
+ConfidenceInterval = [286.009 ms; 297.375 ms] (CI 99.9%), Margin = 5.683 ms (1.95% of Mean)
+Skewness = 0.17, Kurtosis = 0.79, MValue = 2
+
+// ** Remained 1 (6.2 %) benchmark(s) to run. Estimated finish 2026-04-19 10:41 (0h 0m from now) **
+// **************************
+// Benchmark: VersionedVsNonVersionedBenchmark.'Versioned: SaveAsync (initial)': .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0, IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1) [AggregateCount=200, VersionsPerAggregate=10]
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1.dll --anonymousPipes 169 170 --benchmarkName "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.VersionedVsNonVersionedBenchmark.Insert_Versioned(AggregateCount: 200, VersionsPerAggregate: 10)" --job ".NET 10.0" --benchmarkId 15 in /home/runner/work/bielu.entityframework.extensions/bielu.entityframework.extensions/src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/bin/Release/net10.0/Bielu.EntityFramework.Extensions.Versioning.Benchmarks-Job-PSZTYW-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX512 BITALG+VBMI2+VNNI+VPOPCNTDQ,AVX512 IFMA+VBMI,AVX512 F+BW+CD+DQ+VL,AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: .NET 10.0(IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1)
+
+// BeforeActualRun
+WorkloadActual   1: 1 op, 1126715172.00 ns, 1.1267 s/op
+
+// AfterActualRun
+WorkloadResult   1: 1 op, 1126715172.00 ns, 1.1267 s/op
+// GC:  4 1 0 76750224 1
+// Threading:  0 0 1
+
+// AfterAll
+// Benchmark Process 5096 has exited with code 0.
+
+Mean = 1.127 s, StdErr = 0.000 s (0.00%), N = 1, StdDev = 0.000 s
+Min = 1.127 s, Q1 = 1.127 s, Median = 1.127 s, Q3 = 1.127 s, Max = 1.127 s
+IQR = 0.000 s, LowerFence = 1.127 s, UpperFence = 1.127 s
+ConfidenceInterval = [NaN s; NaN s] (CI 99.9%), Margin = NaN s (NaN% of Mean)
+Skewness = NaN, Kurtosis = NaN, MValue = 2
+
+// ** Remained 0 (0.0 %) benchmark(s) to run. Estimated finish 2026-04-19 10:41 (0h 0m from now) **
+// ***** BenchmarkRunner: Finish  *****
+
+// * Export *
+
+// * Detailed results *
+VersionedVsNonVersionedBenchmark.'Versioned: SaveAsync (initial)': Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1) [AggregateCount=50, VersionsPerAggregate=1]
+Runtime = .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4; GC = Concurrent Workstation
+Mean = 86.842 ms, StdErr = 13.887 ms (15.99%), N = 5, StdDev = 31.053 ms
+Min = 54.933 ms, Q1 = 58.190 ms, Median = 84.040 ms, Q3 = 117.345 ms, Max = 119.701 ms
+IQR = 59.155 ms, LowerFence = -30.542 ms, UpperFence = 206.077 ms
+ConfidenceInterval = [-32.731 ms; 206.415 ms] (CI 99.9%), Margin = 119.573 ms (137.69% of Mean)
+Skewness = 0.05, Kurtosis = 0.8, MValue = 2
+-------------------- Histogram --------------------
+[45.652 ms ;  93.321 ms) | @@@
+[93.321 ms ; 143.535 ms) | @@
+---------------------------------------------------
+
+VersionedVsNonVersionedBenchmark.'Versioned: SaveAsync (initial)': .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0, IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1) [AggregateCount=50, VersionsPerAggregate=1]
+Runtime = .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4; GC = Concurrent Workstation
+Mean = 275.816 ms, StdErr = 0.000 ms (0.00%), N = 1, StdDev = 0.000 ms
+Min = 275.816 ms, Q1 = 275.816 ms, Median = 275.816 ms, Q3 = 275.816 ms, Max = 275.816 ms
+IQR = 0.000 ms, LowerFence = 275.816 ms, UpperFence = 275.816 ms
+ConfidenceInterval = [NaN ms; NaN ms] (CI 99.9%), Margin = NaN ms (NaN% of Mean)
+Skewness = NaN, Kurtosis = NaN, MValue = 2
+-------------------- Histogram --------------------
+[275.816 ms ; 275.816 ms) | @
+---------------------------------------------------
+
+VersionedVsNonVersionedBenchmark.'Versioned: SaveAsync (initial)': Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1) [AggregateCount=50, VersionsPerAggregate=10]
+Runtime = .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4; GC = Concurrent Workstation
+Mean = 92.558 ms, StdErr = 14.786 ms (15.97%), N = 5, StdDev = 33.062 ms
+Min = 54.900 ms, Q1 = 58.140 ms, Median = 111.549 ms, Q3 = 119.018 ms, Max = 119.184 ms
+IQR = 60.877 ms, LowerFence = -33.176 ms, UpperFence = 210.333 ms
+ConfidenceInterval = [-34.753 ms; 219.869 ms] (CI 99.9%), Margin = 127.311 ms (137.55% of Mean)
+Skewness = -0.28, Kurtosis = 0.76, MValue = 2
+-------------------- Histogram --------------------
+[29.523 ms ;  89.989 ms) | @@
+[89.989 ms ; 144.561 ms) | @@@
+---------------------------------------------------
+
+VersionedVsNonVersionedBenchmark.'Versioned: SaveAsync (initial)': .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0, IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1) [AggregateCount=50, VersionsPerAggregate=10]
+Runtime = .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4; GC = Concurrent Workstation
+Mean = 275.721 ms, StdErr = 0.000 ms (0.00%), N = 1, StdDev = 0.000 ms
+Min = 275.721 ms, Q1 = 275.721 ms, Median = 275.721 ms, Q3 = 275.721 ms, Max = 275.721 ms
+IQR = 0.000 ms, LowerFence = 275.721 ms, UpperFence = 275.721 ms
+ConfidenceInterval = [NaN ms; NaN ms] (CI 99.9%), Margin = NaN ms (NaN% of Mean)
+Skewness = NaN, Kurtosis = NaN, MValue = 2
+-------------------- Histogram --------------------
+[275.721 ms ; 275.721 ms) | @
+---------------------------------------------------
+
+VersionedVsNonVersionedBenchmark.'Versioned: SaveAsync (initial)': Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1) [AggregateCount=200, VersionsPerAggregate=1]
+Runtime = .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4; GC = Concurrent Workstation
+Mean = 185.283 ms, StdErr = 1.105 ms (0.60%), N = 5, StdDev = 2.470 ms
+Min = 183.300 ms, Q1 = 183.596 ms, Median = 184.309 ms, Q3 = 185.888 ms, Max = 189.322 ms
+IQR = 2.292 ms, LowerFence = 180.159 ms, UpperFence = 189.325 ms
+ConfidenceInterval = [175.772 ms; 194.794 ms] (CI 99.9%), Margin = 9.511 ms (5.13% of Mean)
+Skewness = 0.7, Kurtosis = 1.56, MValue = 2
+-------------------- Histogram --------------------
+[182.698 ms ; 187.426 ms) | @@@@
+[187.426 ms ; 191.218 ms) | @
+---------------------------------------------------
+
+VersionedVsNonVersionedBenchmark.'Versioned: SaveAsync (initial)': .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0, IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1) [AggregateCount=200, VersionsPerAggregate=1]
+Runtime = .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4; GC = Concurrent Workstation
+Mean = 878.002 ms, StdErr = 0.000 ms (0.00%), N = 1, StdDev = 0.000 ms
+Min = 878.002 ms, Q1 = 878.002 ms, Median = 878.002 ms, Q3 = 878.002 ms, Max = 878.002 ms
+IQR = 0.000 ms, LowerFence = 878.002 ms, UpperFence = 878.002 ms
+ConfidenceInterval = [NaN ms; NaN ms] (CI 99.9%), Margin = NaN ms (NaN% of Mean)
+Skewness = NaN, Kurtosis = NaN, MValue = 2
+-------------------- Histogram --------------------
+[878.002 ms ; 878.002 ms) | @
+---------------------------------------------------
+
+VersionedVsNonVersionedBenchmark.'Versioned: SaveAsync (initial)': Job-PSZTYW(InvocationCount=1, IterationCount=5, RunStrategy=Throughput, UnrollFactor=1, WarmupCount=1) [AggregateCount=200, VersionsPerAggregate=10]
+Runtime = .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4; GC = Concurrent Workstation
+Mean = 291.692 ms, StdErr = 0.440 ms (0.15%), N = 4, StdDev = 0.879 ms
+Min = 290.876 ms, Q1 = 291.022 ms, Median = 291.569 ms, Q3 = 292.240 ms, Max = 292.753 ms
+IQR = 1.218 ms, LowerFence = 289.195 ms, UpperFence = 294.067 ms
+ConfidenceInterval = [286.009 ms; 297.375 ms] (CI 99.9%), Margin = 5.683 ms (1.95% of Mean)
+Skewness = 0.17, Kurtosis = 0.79, MValue = 2
+-------------------- Histogram --------------------
+[290.149 ms ; 293.481 ms) | @@@@
+---------------------------------------------------
+
+VersionedVsNonVersionedBenchmark.'Versioned: SaveAsync (initial)': .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0, IterationCount=1, LaunchCount=1, RunStrategy=ColdStart, UnrollFactor=1, WarmupCount=1) [AggregateCount=200, VersionsPerAggregate=10]
+Runtime = .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4; GC = Concurrent Workstation
+Mean = 1.127 s, StdErr = 0.000 s (0.00%), N = 1, StdDev = 0.000 s
+Min = 1.127 s, Q1 = 1.127 s, Median = 1.127 s, Q3 = 1.127 s, Max = 1.127 s
+IQR = 0.000 s, LowerFence = 1.127 s, UpperFence = 1.127 s
+ConfidenceInterval = [NaN s; NaN s] (CI 99.9%), Margin = NaN s (NaN% of Mean)
+Skewness = NaN, Kurtosis = NaN, MValue = 2
+-------------------- Histogram --------------------
+[1.127 s ; 1.127 s) | @
+---------------------------------------------------
+
+// * Summary *
+
+BenchmarkDotNet v0.15.8, Linux Ubuntu 24.04.4 LTS (Noble Numbat)
+AMD EPYC 9V74 2.60GHz, 1 CPU, 4 logical and 2 physical cores
+.NET SDK 10.0.201
+  [Host]     : .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4
+  Job-PSZTYW : .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4
+  .NET 10.0  : .NET 10.0.5 (10.0.5, 10.0.526.15411), X64 RyuJIT x86-64-v4
+
+Runtime=.NET 10.0  UnrollFactor=1  WarmupCount=1  
+Categories=Insert  
+
+| Method                           | Job        | Toolchain | InvocationCount | IterationCount | LaunchCount | RunStrategy | AggregateCount | VersionsPerAggregate | Mean        | Error      | StdDev    | Median      | Min         | Max        | Gen0      | Gen1      | Allocated |
+|--------------------------------- |----------- |---------- |---------------- |--------------- |------------ |------------ |--------------- |--------------------- |------------:|-----------:|----------:|------------:|------------:|-----------:|----------:|----------:|----------:|
+| 'Versioned: SaveAsync (initial)' | Job-PSZTYW | Default   | 1               | 5              | Default     | Throughput  | 50             | 1                    |    86.84 ms | 119.573 ms | 31.053 ms |    84.04 ms |    54.93 ms |   119.7 ms |         - |         - |   6.82 MB |
+| 'Versioned: SaveAsync (initial)' | .NET 10.0  | net10.0   | Default         | 1              | 1           | ColdStart   | 50             | 1                    |   275.82 ms |         NA |  0.000 ms |   275.82 ms |   275.82 ms |   275.8 ms |         - |         - |   6.82 MB |
+| 'Versioned: SaveAsync (initial)' | Job-PSZTYW | Default   | 1               | 5              | Default     | Throughput  | 50             | 10                   |    92.56 ms | 127.311 ms | 33.062 ms |   111.55 ms |    54.90 ms |   119.2 ms |         - |         - |   6.82 MB |
+| 'Versioned: SaveAsync (initial)' | .NET 10.0  | net10.0   | Default         | 1              | 1           | ColdStart   | 50             | 10                   |   275.72 ms |         NA |  0.000 ms |   275.72 ms |   275.72 ms |   275.7 ms |         - |         - |   6.84 MB |
+| 'Versioned: SaveAsync (initial)' | Job-PSZTYW | Default   | 1               | 5              | Default     | Throughput  | 200            | 1                    |   185.28 ms |   9.511 ms |  2.470 ms |   184.31 ms |   183.30 ms |   189.3 ms | 4000.0000 | 1000.0000 |  73.17 MB |
+| 'Versioned: SaveAsync (initial)' | .NET 10.0  | net10.0   | Default         | 1              | 1           | ColdStart   | 200            | 1                    |   878.00 ms |         NA |  0.000 ms |   878.00 ms |   878.00 ms |   878.0 ms | 4000.0000 | 1000.0000 |  73.22 MB |
+| 'Versioned: SaveAsync (initial)' | Job-PSZTYW | Default   | 1               | 5              | Default     | Throughput  | 200            | 10                   |   291.69 ms |   5.683 ms |  0.879 ms |   291.57 ms |   290.88 ms |   292.8 ms | 4000.0000 | 1000.0000 |  73.22 MB |
+| 'Versioned: SaveAsync (initial)' | .NET 10.0  | net10.0   | Default         | 1              | 1           | ColdStart   | 200            | 10                   | 1,126.72 ms |         NA |  0.000 ms | 1,126.72 ms | 1,126.72 ms | 1,126.7 ms | 4000.0000 | 1000.0000 |  73.19 MB |
+
+// * Legends *
+  AggregateCount       : Value of the 'AggregateCount' parameter
+  VersionsPerAggregate : Value of the 'VersionsPerAggregate' parameter
+  Mean                 : Arithmetic mean of all measurements
+  Error                : Half of 99.9% confidence interval
+  StdDev               : Standard deviation of all measurements
+  Median               : Value separating the higher half of all measurements (50th percentile)
+  Min                  : Minimum
+  Max                  : Maximum
+  Gen0                 : GC Generation 0 collects per 1000 operations
+  Gen1                 : GC Generation 1 collects per 1000 operations
+  Allocated            : Allocated memory per single operation (managed only, inclusive, 1KB = 1024B)
+  1 ms                 : 1 Millisecond (0.001 sec)
+
+// * Diagnostic Output - MemoryDiagnoser *
+
+
+// ***** BenchmarkRunner: End *****
+Run time: 00:00:18 (18.07 sec), executed benchmarks: 8
+
+Global total time: 00:01:32 (92.35 sec), executed benchmarks: 16
+// * Artifacts cleanup *
+Artifacts cleanup is finished

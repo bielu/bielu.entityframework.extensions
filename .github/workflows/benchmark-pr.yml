@@ -1,0 +1,67 @@
+name: Performance Benchmark on PR
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'src/Bielu.EntityFramework.Extensions.Versioning/**'
+      - 'src/Bielu.EntityFramework.Extensions.Versioning.Abstractions/**'
+      - 'src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/**'
+      - 'Directory.Packages.props'
+      - '.github/workflows/benchmark-pr.yml'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: '10.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/Bielu.EntityFramework.Extensions.Versioning.Benchmarks.csproj
+
+    - name: Build benchmarks
+      run: dotnet build src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/Bielu.EntityFramework.Extensions.Versioning.Benchmarks.csproj -c Release --no-restore
+
+    - name: Run regression benchmarks
+      run: |
+        dotnet run --project src/Bielu.EntityFramework.Extensions.Versioning.Benchmarks/Bielu.EntityFramework.Extensions.Versioning.Benchmarks.csproj \
+          -c Release --no-build -- \
+          --filter "*RegressionBenchmark*" \
+          --exporters json \
+          --artifacts ./BenchmarkDotNet.Artifacts
+
+    - name: Post benchmark results
+      uses: benchmark-action/github-action-benchmark@v1
+      with:
+        name: Regression Benchmarks
+        tool: 'benchmarkdotnet'
+        output-file-path: ./BenchmarkDotNet.Artifacts/results/Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark-report-full-compressed.json
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        comment-on-alert: true
+        comment-always: true
+        summary-always: true
+        alert-threshold: '115%'
+        fail-on-alert: true
+        # Compare with historical data from gh-pages but do not push (PR context)
+        auto-push: false
+        gh-pages-branch: gh-pages
+        benchmark-data-dir-path: benchmarks
+
+    - name: Upload benchmark results
+      if: always()
+      uses: actions/upload-artifact@v7
+      with:
+        name: benchmark-results-pr-${{ github.event.pull_request.number }}
+        path: ./BenchmarkDotNet.Artifacts/results/
+        retention-days: 90

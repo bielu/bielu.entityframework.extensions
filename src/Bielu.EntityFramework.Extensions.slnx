@@ -3,6 +3,7 @@
     <Project Path="Bielu.EntityFramework.Extensions.Versioning.Abstractions/Bielu.EntityFramework.Extensions.Versioning.Abstractions.csproj" />
     <Project Path="Bielu.EntityFramework.Extensions.Versioning/Bielu.EntityFramework.Extensions.Versioning.csproj" />
     <Project Path="Bielu.EntityFramework.Extensions.Versioning.OpenTelemetry/Bielu.EntityFramework.Extensions.Versioning.OpenTelemetry.csproj" />
+    <Project Path="Bielu.EntityFramework.Extensions.Versioning.Benchmarks/Bielu.EntityFramework.Extensions.Versioning.Benchmarks.csproj" />
   </Folder>
   <Folder Name="/test/">
     <Project Path="..\test\Bielu.EntityFramework.Extensions.Versioning.Tests\Bielu.EntityFramework.Extensions.Versioning.Tests.csproj" />
