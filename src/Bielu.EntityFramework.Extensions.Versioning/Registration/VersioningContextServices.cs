@@ -72,6 +72,9 @@ internal static class VersioningContextServices
     /// <summary>
     /// Trivial <see cref="IOptionsMonitor{TOptions}"/> wrapping a fixed value;
     /// used as a fallback when the DI container has no real registration.
+    /// Returns a no-op disposable from <see cref="OnChange"/> to satisfy the
+    /// interface contract — callers commonly dispose the returned token
+    /// unconditionally.
     /// </summary>
     private sealed class StaticOptionsMonitor<TOptions>(TOptions value) : IOptionsMonitor<TOptions>
     {
@@ -79,6 +82,12 @@ internal static class VersioningContextServices
 
         public TOptions Get(string? name) => CurrentValue;
 
-        public IDisposable? OnChange(Action<TOptions, string?> listener) => null;
+        public IDisposable OnChange(Action<TOptions, string?> listener) => NoOpDisposable.Instance;
+
+        private sealed class NoOpDisposable : IDisposable
+        {
+            public static readonly NoOpDisposable Instance = new();
+            public void Dispose() { }
+        }
     }
 }

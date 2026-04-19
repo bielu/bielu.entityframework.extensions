@@ -5,7 +5,16 @@
     <PropertyGroup>
       <Title>$(MSBuildProjectName)</Title>
       <AssemblyName>$(MSBuildProjectName)</AssemblyName>
-      <AssemblyVersion>$(Version)</AssemblyVersion>
+      <!--
+        AssemblyVersion must be a strictly numeric four-part value
+        (Major.Minor.Build.Revision); a prerelease suffix such as
+        "-beta" produced by VersionSuffix would make the assembly fail
+        to load. Use VersionPrefix (which is always numeric) here, and
+        let Version/PackageVersion carry the full SemVer string with
+        optional suffix.
+      -->
+      <AssemblyVersion>$(VersionPrefix).0</AssemblyVersion>
+      <FileVersion>$(VersionPrefix).0</FileVersion>
     </PropertyGroup>
 
     <PropertyGroup>

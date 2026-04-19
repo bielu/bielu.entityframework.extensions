@@ -30,11 +30,13 @@ internal sealed class VersionedReader<TEntity, TEntityId, TVersionId>(
         // honour tombstones by returning null if the latest version is a soft
         // delete. This is the correct "current view" semantics: a tombstone
         // does mark the aggregate as not-currently-present.
+        // Tiebreaker for equal EffectiveAt is VersionId, matching the
+        // (EntityId, EffectiveAt, VersionId) unique index.
         var latest = await Set
             .IgnoreQueryFilters()
             .Where(e => e.EntityId.Equals(entityId) && e.EffectiveAt <= asOfValue)
             .OrderByDescending(e => e.EffectiveAt)
-            .ThenByDescending(e => e.VersionNumber)
+            .ThenByDescending(e => e.VersionId)
             .FirstOrDefaultAsync(cancellationToken)
             .ConfigureAwait(false);
 
@@ -55,7 +57,7 @@ internal sealed class VersionedReader<TEntity, TEntityId, TVersionId>(
             .IgnoreQueryFilters()
             .Where(e => e.EntityId.Equals(entityId))
             .OrderBy(e => e.EffectiveAt)
-            .ThenBy(e => e.VersionNumber)
+            .ThenBy(e => e.VersionId)
             .ToListAsync(cancellationToken)
             .ConfigureAwait(false);
 
@@ -78,7 +80,7 @@ internal sealed class VersionedReader<TEntity, TEntityId, TVersionId>(
 
         return await query
             .OrderBy(e => e.EffectiveAt)
-            .ThenBy(e => e.VersionNumber)
+            .ThenBy(e => e.VersionId)
             .ToListAsync(cancellationToken)
             .ConfigureAwait(false);
     }
@@ -92,7 +94,7 @@ internal sealed class VersionedReader<TEntity, TEntityId, TVersionId>(
             .IgnoreQueryFilters()
             .Where(e => e.EntityId.Equals(entityId) && e.EffectiveAt <= effectiveAt)
             .OrderByDescending(e => e.EffectiveAt)
-            .ThenByDescending(e => e.VersionNumber)
+            .ThenByDescending(e => e.VersionId)
             .FirstOrDefaultAsync(cancellationToken)
             .ConfigureAwait(false);
 
@@ -100,7 +102,7 @@ internal sealed class VersionedReader<TEntity, TEntityId, TVersionId>(
             .IgnoreQueryFilters()
             .Where(e => e.EntityId.Equals(entityId) && e.EffectiveAt > effectiveAt)
             .OrderBy(e => e.EffectiveAt)
-            .ThenBy(e => e.VersionNumber)
+            .ThenBy(e => e.VersionId)
             .FirstOrDefaultAsync(cancellationToken)
             .ConfigureAwait(false);
 
@@ -109,16 +111,17 @@ internal sealed class VersionedReader<TEntity, TEntityId, TVersionId>(
 
     public async Task<int> GetVersionCountAsync(TEntityId entityId, CancellationToken cancellationToken)
     {
-        // MAX(VersionNumber) is an index seek given IX_*_EntityId_VersionNumber.
-        // The highest insertion-order number for an aggregate equals the
-        // total number of versions.
-        var max = await Set
+        // COUNT is provably correct under all conditions; the (EntityId, …)
+        // index makes it an index seek. We previously used MAX(VersionNumber)
+        // here as a micro-optimisation, but that was only correct if
+        // VersionNumber was a strict 1..N sequence per EntityId — which it
+        // is not under concurrent inserts, since the interceptor stamps
+        // VersionNumber from a non-locked MAX read. COUNT removes that
+        // dependency entirely.
+        return await Set
             .IgnoreQueryFilters()
             .Where(e => e.EntityId.Equals(entityId))
-            .Select(e => (int?)e.VersionNumber)
-            .MaxAsync(cancellationToken)
+            .CountAsync(cancellationToken)
             .ConfigureAwait(false);
-
-        return max ?? 0;
     }
 }

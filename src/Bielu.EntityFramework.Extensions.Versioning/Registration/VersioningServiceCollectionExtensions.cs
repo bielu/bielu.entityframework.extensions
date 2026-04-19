@@ -53,10 +53,29 @@ public static class VersioningServiceCollectionExtensions
         services.AddLogging();
         services.TryAddSingleton<VersioningSaveChangesInterceptor>();
         // Surface the interceptor as IInterceptor so EF Core picks it up
-        // automatically from the application service provider.
-        services.AddSingleton<IInterceptor>(sp =>
-            sp.GetRequiredService<VersioningSaveChangesInterceptor>());
+        // automatically from the application service provider. We can't use
+        // TryAddEnumerable here because IInterceptor mappings produced by a
+        // factory delegate are indistinguishable from each other from DI's
+        // point of view (TryAddEnumerable rejects them). A marker descriptor
+        // gives us cheap, exact idempotency: repeated AddBieluVersioning()
+        // calls become no-ops for this registration so the interceptor is
+        // never invoked more than once per SaveChanges.
+        if (!services.Any(d => d.ServiceType == typeof(VersioningInterceptorRegistrationMarker)))
+        {
+            services.AddSingleton<VersioningInterceptorRegistrationMarker>();
+            services.AddSingleton<IInterceptor>(sp =>
+                sp.GetRequiredService<VersioningSaveChangesInterceptor>());
+        }
         return services;
+    }
+
+    /// <summary>
+    /// Marker type used to make the <see cref="IInterceptor"/> registration in
+    /// <see cref="AddBieluVersioning"/> idempotent across repeated calls. Has
+    /// no behaviour of its own.
+    /// </summary>
+    internal sealed class VersioningInterceptorRegistrationMarker
+    {
     }
 
     /// <summary>

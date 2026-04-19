@@ -59,10 +59,12 @@ public sealed class VersionedEntityConfiguration<TEntity, TEntityId, TVersionId>
         builder.HasIndex(nameof(IVersionedEntity<TEntityId, TVersionId>.EntityId),
                          nameof(IVersionedEntity.EffectiveAt));
 
-        // Insertion-order index: makes MAX(VersionNumber) per EntityId an
-        // index seek. The highest VersionNumber for an EntityId equals the
-        // total number of versions for that aggregate, so callers get the
-        // count for free.
+        // Insertion-order index: keeps an ordered scan by VersionNumber per
+        // aggregate cheap. The highest VersionNumber for an EntityId is a
+        // best-effort indicator of "how many versions" — under concurrent
+        // inserts there can be gaps/duplicates because the interceptor
+        // stamps VersionNumber from a non-locked MAX read; consumers needing
+        // the actual count should use COUNT (which the reader does).
         builder.HasIndex(nameof(IVersionedEntity<TEntityId, TVersionId>.EntityId),
                          nameof(IVersionedEntity.VersionNumber));
 
@@ -75,14 +77,15 @@ public sealed class VersionedEntityConfiguration<TEntity, TEntityId, TVersionId>
             builder.Property("ConcurrencyToken").IsConcurrencyToken();
         }
 
-        // Optional global query filter for "current non-deleted version" only.
-        if (options.QueryFilterBehavior == QueryFilterBehavior.AsOfNow)
+        // Optional global query filter that hides soft-delete tombstones.
+        // This is intentionally NOT a "latest version per EntityId" filter:
+        // restricting a result set to the most-recent version per EntityId
+        // requires a self-correlated query that EF Core cannot translate
+        // uniformly across providers. Use VersionedDbContext.GetCurrentAsync
+        // / DbSet<T>.GetCurrentAsync (or an explicit GroupBy LINQ expression)
+        // for "current view" semantics.
+        if (options.QueryFilterBehavior == QueryFilterBehavior.HideTombstones)
         {
-            // Per-EntityId latest-non-deleted is not safely expressible as a
-            // simple HasQueryFilter (it requires a self-correlated query that
-            // EF Core cannot translate uniformly across providers). We
-            // install a soft-delete filter; VersionedDbContext exposes
-            // "current as-of" semantics via LINQ.
             Expression<Func<TEntity, bool>> filter = e => !e.IsDeleted;
             builder.HasQueryFilter(filter);
         }

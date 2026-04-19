@@ -45,12 +45,16 @@ token out of the box.
 
 ### Configure the model
 
+The recommended pattern is to derive your context from `VersionedDbContext`,
+which makes the versioning operations available as instance methods on the
+context itself:
+
 ```csharp
 using Bielu.EntityFramework.Extensions.Versioning;
 using Bielu.EntityFramework.Extensions.Versioning.Modeling;
 
 public sealed class ContentDbContext(DbContextOptions<ContentDbContext> options)
-    : VersionedDbContext(options)            // required base class
+    : VersionedDbContext(options)            // optional but recommended
 {
     public DbSet<Content> Contents => Set<Content>();
 
@@ -59,16 +63,26 @@ public sealed class ContentDbContext(DbContextOptions<ContentDbContext> options)
 }
 ```
 
+Inheritance is **not** required — the `DbSet<T>` extension surface
+(described below) works on any `DbContext` derivative as long as
+`ApplyVersioning<…>()` has been called for the entity. Use
+`VersionedDbContext` when you want a single one-stop registration via
+`AddVersionedDbContext<TContext>(...)`; use a plain `DbContext` when you
+want to opt one entity into versioning without changing your context base
+class.
+
 `ApplyVersioning` sets `VersionId` as the primary key, adds a composite
 unique index on `(EntityId, EffectiveAt, VersionId)` (the `VersionId`
 tiebreaker means legitimate ties don't violate the index), an index on
-`(EntityId, VersionNumber)` so `MAX(VersionNumber)` is an index seek, and
-configures the concurrency token.
+`(EntityId, VersionNumber)` so the timeline can be ordered by insertion,
+and configures the concurrency token.
 
 Versioning operations (`Save` / `Update` / `Upsert` / `Get*`) are exposed
-exclusively as instance methods on `VersionedDbContext` — there are no
-extension methods on plain `DbContext` or `DbSet<>`. This keeps the
-versioning surface scoped to contexts that actually opt in to it.
+on two surfaces — instance methods on `VersionedDbContext` and extension
+methods on `DbSet<TEntity>` constrained to
+`IVersionedEntity<TEntityId, TVersionId>`. There are deliberately **no**
+extension methods on plain `DbContext`: that keeps the versioning surface
+scoped to the entities that actually opt in to it.
 
 ### Register DI
 
@@ -164,7 +178,11 @@ var snapshot = await db.Contents.GetCurrentAsync<Content, Guid, Guid>(id, asOf: 
 // Full ordered timeline.
 IReadOnlyList<Content> all = await db.Contents.GetAllVersionsAsync<Content, Guid, Guid>(id);
 
-// Cheap count: a single MAX(VersionNumber) index seek, independent of history size.
+// Total number of versions for the aggregate. Implemented as a single
+// COUNT against the (EntityId, ...) index — provably correct under
+// concurrent writes (MAX(VersionNumber) was previously used here as a
+// micro-optimisation, but VersionNumber is best-effort under concurrency
+// and not safe to count from).
 int total = await db.Contents.GetVersionCountAsync<Content, Guid, Guid>(id);
 
 // Predecessor / successor of an EffectiveAt point — useful for diffing late inserts.
@@ -183,7 +201,7 @@ when the tombstone is the latest version.
 | Option | Default | Behaviour |
 | --- | --- | --- |
 | `VersionIdStrategy` | `NewGuid` | How `VersionId`s are auto-assigned by the interceptor when not pre-populated. `CallerProvided` disables auto-assignment. |
-| `QueryFilterBehavior` | `AllVersions` | Whether to install a soft-delete query filter on versioned entities. The `VersionedDbContext` read methods always call `IgnoreQueryFilters()` themselves, so this only affects ad-hoc LINQ. Set to `AsOfNow` to hide non-current and tombstoned rows by default. |
+| `QueryFilterBehavior` | `AllVersions` | Whether to install a soft-delete query filter on versioned entities. The versioned read methods always call `IgnoreQueryFilters()` themselves, so this only affects ad-hoc LINQ. Set to `HideTombstones` to hide soft-deleted rows by default. |
 | `InPlaceUpdateBehavior` | `Throw` | What to do when an EF-tracked versioned entity becomes `Modified`. `Throw` enforces immutability; `ConvertToNewVersion` automatically promotes the change to a new version row; `Allow` bypasses the guard for administrative scenarios. |
 | `EffectiveAtPrecision` | `Tick` (verbatim) | Granularity to which incoming `EffectiveAt` timestamps are rounded before persisting (`Tick`, `Microsecond`, `Millisecond`, `Second`). |
 | `DetectCollisionsExplicitly` | `true` | When `true`, the interceptor surfaces `EffectiveAtCollisionException` with a clear message before the provider raises an opaque unique-constraint error. |

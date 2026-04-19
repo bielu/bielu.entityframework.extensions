@@ -32,11 +32,21 @@ public enum QueryFilterBehavior
     AllVersions = 0,
 
     /// <summary>
-    /// Install a global query filter that returns only the latest non-deleted
-    /// version per <c>EntityId</c> as of the current clock time. Use
-    /// <c>IgnoreQueryFilters()</c> on the query to opt out per-call.
+    /// Install a global query filter that hides soft-deleted versions
+    /// (rows with <see cref="IVersionedEntity.IsDeleted"/> set to
+    /// <see langword="true"/>). Use <c>IgnoreQueryFilters()</c> on the query
+    /// to opt out per-call.
+    /// <para>
+    /// Note: this filter is intentionally <b>not</b> a "latest-version-only"
+    /// filter. Restricting a result set to the most-recent version per
+    /// <c>EntityId</c> requires a self-correlated query that EF Core cannot
+    /// translate uniformly across providers; use the
+    /// <c>VersionedDbContext.GetCurrentAsync</c> /
+    /// <c>DbSet&lt;T&gt;.GetCurrentAsync</c> APIs (or an explicit
+    /// <c>GroupBy</c>/<c>OrderByDescending</c> LINQ expression) for that.
+    /// </para>
     /// </summary>
-    AsOfNow = 1,
+    HideTombstones = 1,
 }
 
 /// <summary>
@@ -106,8 +116,8 @@ public sealed class VersioningOptions
     /// <summary>
     /// Default behaviour of the global query filter. Defaults to
     /// <see cref="QueryFilterBehavior.AllVersions"/> — the framework does not
-    /// hide history by default; consumers opt in to "current only" via
-    /// <see cref="QueryFilterBehavior.AsOfNow"/>.
+    /// hide history by default; consumers opt in to hiding tombstones via
+    /// <see cref="QueryFilterBehavior.HideTombstones"/>.
     /// </summary>
     public QueryFilterBehavior QueryFilterBehavior { get; set; } = QueryFilterBehavior.AllVersions;
 

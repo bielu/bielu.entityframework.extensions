@@ -42,19 +42,24 @@ public interface IVersionedEntity
     /// <para>
     /// <see cref="VersionNumber"/> is intentionally <b>independent</b> of
     /// <see cref="EffectiveAt"/>: chronological ordering of the timeline is
-    /// always done via <see cref="EffectiveAt"/>; <see cref="VersionNumber"/>
-    /// captures the order in which versions were <i>recorded</i>. This lets a
+    /// always done via <see cref="EffectiveAt"/> (with <c>VersionId</c> as
+    /// the deterministic tiebreaker); <see cref="VersionNumber"/> captures
+    /// the order in which versions were <i>recorded</i>. This lets a
     /// late-arriving update be inserted between two existing versions without
     /// renumbering anything: it just receives the next available
     /// <see cref="VersionNumber"/>.
     /// </para>
     /// <para>
-    /// Because the highest <see cref="VersionNumber"/> for a given
-    /// <c>EntityId</c> equals the total number of versions, the count is
-    /// available as a single index lookup (<c>MAX(VersionNumber)</c>) and is
-    /// also free of any further query whenever the caller already has a
-    /// version row in hand — typically the one returned by
-    /// <c>GetCurrentAsync</c>.
+    /// <b>Concurrency note.</b> The save-changes interceptor stamps
+    /// <see cref="VersionNumber"/> from a non-locked
+    /// <c>MAX(VersionNumber) + 1</c> read, so under highly concurrent writes
+    /// to the same <c>EntityId</c> the values are best-effort and may have
+    /// gaps or duplicates. They remain useful for diagnostics and as a
+    /// secondary insertion-order key, but consumers should <b>not</b> assume
+    /// a strict 1..N sequence per aggregate; ordering of the timeline is
+    /// done by <see cref="EffectiveAt"/> + <c>VersionId</c>, and the total
+    /// number of versions is computed via <c>COUNT</c> rather than
+    /// <c>MAX(VersionNumber)</c>.
     /// </para>
     /// </remarks>
     int VersionNumber { get; set; }
