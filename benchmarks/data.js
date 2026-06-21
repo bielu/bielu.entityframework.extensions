@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1781408396933,
+  "lastUpdate": 1782013036318,
   "repoUrl": "https://github.com/bielu/bielu.entityframework.extensions",
   "entries": {
     "Regression Benchmarks": [
@@ -2096,6 +2096,268 @@ window.BENCHMARK_DATA = {
             "value": 10882416.25,
             "unit": "ns",
             "range": "± 224189.33929363516"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Arkadiusz Biel",
+            "username": "bielu",
+            "email": "2244074+bielu@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "aac6e026f4a88b9007e71e910ddea5bc30a6c2c7",
+          "message": "Merge pull request #3 from bielu/copilot/align-readme-bielu-ecosystem\n\nAlign README and project layout with bielu ecosystem; fix CI coverage step",
+          "timestamp": "2026-04-19T11:49:28Z",
+          "url": "https://github.com/bielu/bielu.entityframework.extensions/commit/aac6e026f4a88b9007e71e910ddea5bc30a6c2c7"
+        },
+        "date": 1782013035871,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.SaveAsyncBenchmark(Provider: InMemory, AggregateCount: 50, VersionsPerAggregate: 1)",
+            "value": 90173360.6,
+            "unit": "ns",
+            "range": "± 38045687.10171094"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.UpdateAsync(Provider: InMemory, AggregateCount: 50, VersionsPerAggregate: 1)",
+            "value": 86936062,
+            "unit": "ns",
+            "range": "± 9057977.376237737"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetCurrentAsync(Provider: InMemory, AggregateCount: 50, VersionsPerAggregate: 1)",
+            "value": 7510439.4,
+            "unit": "ns",
+            "range": "± 1846778.0963045615"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetAllVersionsAsync(Provider: InMemory, AggregateCount: 50, VersionsPerAggregate: 1)",
+            "value": 6917277.6,
+            "unit": "ns",
+            "range": "± 1800759.4617351869"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetVersionCountAsync(Provider: InMemory, AggregateCount: 50, VersionsPerAggregate: 1)",
+            "value": 5097168.9,
+            "unit": "ns",
+            "range": "± 1145875.062408987"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.SaveAsyncBenchmark(Provider: InMemory, AggregateCount: 50, VersionsPerAggregate: 10)",
+            "value": 88803866.2,
+            "unit": "ns",
+            "range": "± 40831768.47220496"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.UpdateAsync(Provider: InMemory, AggregateCount: 50, VersionsPerAggregate: 10)",
+            "value": 117385053.7,
+            "unit": "ns",
+            "range": "± 22644769.697318666"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetCurrentAsync(Provider: InMemory, AggregateCount: 50, VersionsPerAggregate: 10)",
+            "value": 13593825,
+            "unit": "ns",
+            "range": "± 5786374.0554011455"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetAllVersionsAsync(Provider: InMemory, AggregateCount: 50, VersionsPerAggregate: 10)",
+            "value": 13064686,
+            "unit": "ns",
+            "range": "± 4958297.677742987"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetVersionCountAsync(Provider: InMemory, AggregateCount: 50, VersionsPerAggregate: 10)",
+            "value": 6095946.6,
+            "unit": "ns",
+            "range": "± 2610698.5118419556"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.SaveAsyncBenchmark(Provider: InMemory, AggregateCount: 200, VersionsPerAggregate: 1)",
+            "value": 208815616.9,
+            "unit": "ns",
+            "range": "± 2511778.46539027"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.UpdateAsync(Provider: InMemory, AggregateCount: 200, VersionsPerAggregate: 1)",
+            "value": 349633728.1,
+            "unit": "ns",
+            "range": "± 14454997.509356454"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetCurrentAsync(Provider: InMemory, AggregateCount: 200, VersionsPerAggregate: 1)",
+            "value": 47602725.7,
+            "unit": "ns",
+            "range": "± 926110.9415381616"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetAllVersionsAsync(Provider: InMemory, AggregateCount: 200, VersionsPerAggregate: 1)",
+            "value": 42302790.75,
+            "unit": "ns",
+            "range": "± 186625.2797584418"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetVersionCountAsync(Provider: InMemory, AggregateCount: 200, VersionsPerAggregate: 1)",
+            "value": 36668655.8,
+            "unit": "ns",
+            "range": "± 295233.9491034187"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.SaveAsyncBenchmark(Provider: InMemory, AggregateCount: 200, VersionsPerAggregate: 10)",
+            "value": 200070785.25,
+            "unit": "ns",
+            "range": "± 1359862.0324428442"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.UpdateAsync(Provider: InMemory, AggregateCount: 200, VersionsPerAggregate: 10)",
+            "value": 1143896590.75,
+            "unit": "ns",
+            "range": "± 1875071.9284285915"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetCurrentAsync(Provider: InMemory, AggregateCount: 200, VersionsPerAggregate: 10)",
+            "value": 60667452.25,
+            "unit": "ns",
+            "range": "± 459709.84712270775"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetAllVersionsAsync(Provider: InMemory, AggregateCount: 200, VersionsPerAggregate: 10)",
+            "value": 58515696.25,
+            "unit": "ns",
+            "range": "± 256557.34374778022"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetVersionCountAsync(Provider: InMemory, AggregateCount: 200, VersionsPerAggregate: 10)",
+            "value": 55752429.25,
+            "unit": "ns",
+            "range": "± 75596.75416036943"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.SaveAsyncBenchmark(Provider: Sqlite, AggregateCount: 50, VersionsPerAggregate: 1)",
+            "value": 108207941.4,
+            "unit": "ns",
+            "range": "± 47800475.174148574"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.UpdateAsync(Provider: Sqlite, AggregateCount: 50, VersionsPerAggregate: 1)",
+            "value": 70016814,
+            "unit": "ns",
+            "range": "± 15853873.801106919"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetCurrentAsync(Provider: Sqlite, AggregateCount: 50, VersionsPerAggregate: 1)",
+            "value": 10941266.7,
+            "unit": "ns",
+            "range": "± 1808995.6136746712"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetAllVersionsAsync(Provider: Sqlite, AggregateCount: 50, VersionsPerAggregate: 1)",
+            "value": 9325845.7,
+            "unit": "ns",
+            "range": "± 1128071.492798085"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetVersionCountAsync(Provider: Sqlite, AggregateCount: 50, VersionsPerAggregate: 1)",
+            "value": 7290126.4,
+            "unit": "ns",
+            "range": "± 1169687.0664435425"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.SaveAsyncBenchmark(Provider: Sqlite, AggregateCount: 50, VersionsPerAggregate: 10)",
+            "value": 84703983,
+            "unit": "ns",
+            "range": "± 18298537.85402111"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.UpdateAsync(Provider: Sqlite, AggregateCount: 50, VersionsPerAggregate: 10)",
+            "value": 104992874,
+            "unit": "ns",
+            "range": "± 16172386.613490678"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetCurrentAsync(Provider: Sqlite, AggregateCount: 50, VersionsPerAggregate: 10)",
+            "value": 6289321.2,
+            "unit": "ns",
+            "range": "± 2516760.158237908"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetAllVersionsAsync(Provider: Sqlite, AggregateCount: 50, VersionsPerAggregate: 10)",
+            "value": 6137346.8,
+            "unit": "ns",
+            "range": "± 2074911.4030928405"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetVersionCountAsync(Provider: Sqlite, AggregateCount: 50, VersionsPerAggregate: 10)",
+            "value": 3373588.8,
+            "unit": "ns",
+            "range": "± 1829258.219057304"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.SaveAsyncBenchmark(Provider: Sqlite, AggregateCount: 200, VersionsPerAggregate: 1)",
+            "value": 311268363.3,
+            "unit": "ns",
+            "range": "± 59313894.830695264"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.UpdateAsync(Provider: Sqlite, AggregateCount: 200, VersionsPerAggregate: 1)",
+            "value": 332047785.5,
+            "unit": "ns",
+            "range": "± 25891046.72391497"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetCurrentAsync(Provider: Sqlite, AggregateCount: 200, VersionsPerAggregate: 1)",
+            "value": 41933207.4,
+            "unit": "ns",
+            "range": "± 828795.009403592"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetAllVersionsAsync(Provider: Sqlite, AggregateCount: 200, VersionsPerAggregate: 1)",
+            "value": 32024816.5,
+            "unit": "ns",
+            "range": "± 4659079.60368628"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetVersionCountAsync(Provider: Sqlite, AggregateCount: 200, VersionsPerAggregate: 1)",
+            "value": 27301402,
+            "unit": "ns",
+            "range": "± 2715898.9265594"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.SaveAsyncBenchmark(Provider: Sqlite, AggregateCount: 200, VersionsPerAggregate: 10)",
+            "value": 236150301.75,
+            "unit": "ns",
+            "range": "± 1084020.0416663198"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.UpdateAsync(Provider: Sqlite, AggregateCount: 200, VersionsPerAggregate: 10)",
+            "value": 1067318830.5,
+            "unit": "ns",
+            "range": "± 1956230.4084218964"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetCurrentAsync(Provider: Sqlite, AggregateCount: 200, VersionsPerAggregate: 10)",
+            "value": 12386283.75,
+            "unit": "ns",
+            "range": "± 297788.60821884486"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetAllVersionsAsync(Provider: Sqlite, AggregateCount: 200, VersionsPerAggregate: 10)",
+            "value": 11820460.75,
+            "unit": "ns",
+            "range": "± 213527.4660683804"
+          },
+          {
+            "name": "Bielu.EntityFramework.Extensions.Versioning.Benchmarks.RegressionBenchmark.GetVersionCountAsync(Provider: Sqlite, AggregateCount: 200, VersionsPerAggregate: 10)",
+            "value": 6399936.8,
+            "unit": "ns",
+            "range": "± 450740.47284185607"
           }
         ]
       }
